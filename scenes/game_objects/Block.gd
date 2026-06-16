@@ -12,7 +12,7 @@ func _ready():
 		$Sprite2D.modulate = data.color
 
 func push(direction: Vector2i) -> bool:
-	if is_moving: return false
+	if is_moving or not grid_logic: return false
 	
 	var target_pos = grid_pos
 	

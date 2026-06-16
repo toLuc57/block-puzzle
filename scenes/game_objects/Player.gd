@@ -18,6 +18,10 @@ func _input(event):
 		attempt_move(dir)
 
 func attempt_move(dir: Vector2i):
+	if not grid_logic:
+		printerr("Player: grid_logic is null. Movement aborted.")
+		return
+		
 	var target_pos = grid_pos + dir
 	if not grid_logic.is_within_bounds(target_pos): return
 	
