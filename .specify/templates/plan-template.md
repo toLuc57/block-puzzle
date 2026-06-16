@@ -1,62 +1,62 @@
-# Implementation Plan: [FEATURE]
+# Kế hoạch Triển khai: [TÍNH NĂNG]
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
+**Nhánh**: `[###-feature-name]` | **Ngày**: [DATE] | **Đặc tả**: [link]
 
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+**Đầu vào**: Đặc tả tính năng từ `/specs/[###-feature-name]/spec.md`
 
-**Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/plan-template.md` for the execution workflow.
+**Lưu ý**: Bản mẫu này được điền bởi lệnh `/speckit.plan`. Xem `.specify/templates/plan-template.md` cho quy trình thực hiện.
 
-## Summary
+## Tóm tắt
 
-[Extract from feature spec: primary requirement + technical approach from research]
+[Trích xuất từ đặc tả tính năng: yêu cầu chính + cách tiếp cận kỹ thuật từ nghiên cứu]
 
-## Technical Context
+## Ngữ cảnh Kỹ thuật
 
 <!--
-  ACTION REQUIRED: Replace the content in this section with the technical details
-  for the project. The structure here is presented in advisory capacity to guide
-  the iteration process.
+  YÊU CẦU HÀNH ĐỘNG: Thay thế nội dung trong phần này bằng các chi tiết kỹ thuật
+  cho dự án. Cấu trúc ở đây được trình bày với tư cách tư vấn để hướng dẫn
+  quá trình lặp lại.
 -->
 
-**Language/Version**: [e.g., Godot 4.6 (GDScript)]
+**Ngôn ngữ/Phiên bản**: [ví dụ: Godot 4.6 (GDScript)]
 
-**Primary Dependencies**: [e.g., Godot Engine]
+**Các Phụ thuộc Chính**: [ví dụ: Godot Engine]
 
-**Storage**: [if applicable, e.g., ConfigFile (.cfg), JSON, Resources (.tres)]
+**Lưu trữ**: [nếu có, ví dụ: ConfigFile (.cfg), JSON, Resources (.tres)]
 
-**Testing**: [e.g., GUT, Manual Verification Scripts]
+**Kiểm thử**: [ví dụ: GUT, Các kịch bản xác thực thủ công]
 
-**Target Platform**: [e.g., Desktop (Windows/macOS/Linux), Web (HTML5), Mobile (Android/iOS)]
+**Nền tảng Mục tiêu**: [ví dụ: Máy tính để bàn (Windows/macOS/Linux), Web (HTML5), Di động (Android/iOS)]
 
-**Project Type**: [e.g., Godot Game / Tool]
+**Loại Dự án**: [ví dụ: Trò chơi Godot / Công cụ]
 
-**Performance Goals**: [domain-specific, e.g., Stable 60 FPS, <100MB RAM]
+**Mục tiêu Hiệu suất**: [đặc thù tên miền, ví dụ: 60 FPS ổn định, <100MB RAM]
 
-**Constraints**: [domain-specific, e.g., 10x10 Grid limitation, drag-and-drop input]
+**Ràng buộc**: [đặc thù tên miền, ví dụ: Giới hạn lưới 10x10, đầu vào kéo và thả]
 
-**Scale/Scope**: [domain-specific, e.g., Single-player, Infinite loop]
+**Quy mô/Phạm vi**: [đặc thù tên miền, ví dụ: Chơi đơn, Vòng lặp vô tận]
 
-## Constitution Check
+## Kiểm tra Hiến chương
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+*CỔNG: Phải vượt qua trước nghiên cứu Giai đoạn 0. Kiểm tra lại sau thiết kế Giai đoạn 1.*
 
-[Gates determined based on constitution file]
+[Các cổng được xác định dựa trên tệp hiến chương]
 
-## Project Structure
+## Cấu trúc Dự án
 
-### Documentation (this feature)
+### Tài liệu (tính năng này)
 
 ```text
 specs/[###-feature]/
-├── plan.md              # This file (/speckit.plan command output)
-├── research.md          # Phase 0 output (/speckit.plan command)
-├── data-model.md        # Phase 1 output (/speckit.plan command)
-├── quickstart.md        # Phase 1 output (/speckit.plan command)
-├── contracts/           # Phase 1 output (/speckit.plan command)
-└── tasks.md             # Phase 2 output (/speckit.tasks command - NOT created by /speckit.plan)
+├── plan.md              # Tệp này (đầu ra của lệnh /speckit.plan)
+├── research.md          # Đầu ra Giai đoạn 0 (lệnh /speckit.plan)
+├── data-model.md        # Đầu ra Giai đoạn 1 (lệnh /speckit.plan)
+├── quickstart.md        # Đầu ra Giai đoạn 1 (lệnh /speckit.plan)
+├── contracts/           # Đầu ra Giai đoạn 1 (lệnh /speckit.plan)
+└── tasks.md             # Đầu ra Giai đoạn 2 (lệnh /speckit.tasks - KHÔNG được tạo bởi /speckit.plan)
 ```
 
-### Source Code (repository root)
+### Mã nguồn (gốc kho lưu trữ)
 
 ```text
 scenes/
@@ -80,14 +80,14 @@ tests/
 └── functional/
 ```
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+**Quyết định Cấu trúc**: [Tài liệu hóa cấu trúc đã chọn và tham chiếu các thư mục
+thực tế được ghi lại ở trên]
 
-## Complexity Tracking
+## Theo dõi Độ phức tạp
 
-> **Fill ONLY if Constitution Check has violations that must be justified**
+> **Chỉ điền nếu Kiểm tra Hiến chương có các vi phạm cần được giải thích**
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
+| Vi phạm | Tại sao cần thiết | Giải pháp thay thế đơn giản hơn bị từ chối vì |
 |-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+| [ví dụ: dự án thứ 4] | [nhu cầu hiện tại] | [tại sao 3 dự án là không đủ] |
+| [ví dụ: Mẫu Repository] | [vấn đề cụ thể] | [tại sao truy cập DB trực tiếp là không đủ] |

@@ -1,5 +1,4 @@
 <!-- SPECKIT START -->
-For core principles and development direction, refer to the [Project Constitution](.specify/memory/constitution.md).
-For additional context about technologies to be used, project structure,
-shell commands, and other important information, read the current plan.
+Để biết các nguyên tắc cốt lõi và hướng phát triển, vui lòng tham khảo [Hiến chương dự án](.specify/memory/constitution.md).
+Để biết thêm ngữ cảnh về các công nghệ sẽ được sử dụng, cấu trúc dự án, các lệnh shell và các thông tin quan trọng khác, hãy đọc kế hoạch hiện tại.
 <!-- SPECKIT END -->

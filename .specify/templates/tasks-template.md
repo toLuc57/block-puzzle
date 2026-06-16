@@ -1,251 +1,163 @@
 ---
 
-description: "Task list template for feature implementation"
+description: "Bản mẫu danh sách nhiệm vụ để triển khai tính năng"
 ---
 
-# Tasks: [FEATURE NAME]
+# Nhiệm vụ: [TÊN TÍNH NĂNG]
 
-**Input**: Design documents from `/specs/[###-feature-name]/`
+**Đầu vào**: Các tài liệu thiết kế từ `/specs/[###-feature-name]/`
 
-**Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
+**Điều kiện tiên quyết**: plan.md (bắt buộc), spec.md (bắt buộc cho các câu chuyện người dùng), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Kiểm thử**: Các ví dụ bên dưới bao gồm các nhiệm vụ kiểm thử. Kiểm thử là TÙY CHỌN - chỉ bao gồm chúng nếu được yêu cầu rõ ràng trong đặc tả tính năng.
 
-**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+**Tổ chức**: Các nhiệm vụ được nhóm theo câu chuyện người dùng để cho phép triển khai và kiểm thử độc lập cho mỗi câu chuyện.
 
-## Format: `[ID] [P?] [Story] Description`
+## Định dạng: `[ID] [P?] [Story] Mô tả`
 
-- **[P]**: Can run in parallel (different files, no dependencies)
-- **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
-- Include exact file paths in descriptions
+- **[P]**: Có thể chạy song song (các tệp khác nhau, không có phụ thuộc)
+- **[Story]**: Nhiệm vụ này thuộc về câu chuyện người dùng nào (ví dụ: US1, US2, US3)
+- Bao gồm đường dẫn tệp chính xác trong mô tả
 
-## Path Conventions
+## Quy ước Đường dẫn
 
-- **Scenes**: `scenes/` (e.g., `scenes/main/Game.tscn`)
-- **Scripts**: `scripts/` (e.g., `scripts/logic/Grid.gd`)
-- **Resources**: `resources/` (e.g., `resources/blocks/I_Block.tres`)
-- **Tests**: `tests/` (e.g., `tests/unit/test_grid.gd`)
+- **Cảnh (Scenes)**: `scenes/` (ví dụ: `scenes/main/Game.tscn`)
+- **Kịch bản (Scripts)**: `scripts/` (ví dụ: `scripts/logic/Grid.gd`)
+- **Tài nguyên (Resources)**: `resources/` (ví dụ: `resources/blocks/I_Block.tres`)
+- **Kiểm thử (Tests)**: `tests/` (ví dụ: `tests/unit/test_grid.gd`)
 
 <!--
   ============================================================================
-  IMPORTANT: The tasks below are SAMPLE TASKS for illustration purposes only.
+  QUAN TRỌNG: Các nhiệm vụ bên dưới là CÁC NHIỆM VỤ VÍ DỤ chỉ nhằm mục đích minh họa.
 
-  The /speckit.tasks command MUST replace these with actual tasks based on:
-  - User stories from spec.md (with their priorities P1, P2, P3...)
-  - Feature requirements from plan.md
-  - Entities from data-model.md
-  - Endpoints from contracts/
+  Lệnh /speckit.tasks PHẢI thay thế những nhiệm vụ này bằng các nhiệm vụ thực tế dựa trên:
+  - Các câu chuyện người dùng từ spec.md (với các mức ưu tiên P1, P2, P3...)
+  - Các yêu cầu tính năng từ plan.md
+  - Các thực thể từ data-model.md
+  - Các điểm cuối (endpoints) từ contracts/
 
-  Tasks MUST be organized by user story so each story can be:
-  - Implemented independently
-  - Tested independently
-  - Delivered as an MVP increment
+  Các nhiệm vụ PHẢI được tổ chức theo câu chuyện người dùng để mỗi câu chuyện có thể:
+  - Được triển khai độc lập
+  - Được kiểm thử độc lập
+  - Được bàn giao như một phần tăng trưởng MVP
 
-  DO NOT keep these sample tasks in the generated tasks.md file.
+  KHÔNG giữ các nhiệm vụ ví dụ này trong tệp tasks.md được tạo ra.
   ============================================================================
 -->
 
-## Phase 1: Setup (Shared Infrastructure)
+## Giai đoạn 1: Thiết lập (Cơ sở hạ tầng dùng chung)
 
-**Purpose**: Project initialization and basic structure
+**Mục đích**: Khởi tạo dự án và cấu trúc cơ bản
 
-- [ ] T001 Create folder structure (scenes, scripts, resources, tests)
-- [ ] T002 Configure Godot project settings
-- [ ] T003 Setup GUT (Godot Unit Testing) if required
-
----
-
-## Phase 2: Foundational (Blocking Prerequisites)
-
-**Purpose**: Core infrastructure that MUST be complete before ANY user story can be implemented
-
-**⚠️ CRITICAL**: No user story work can begin until this phase is complete
-
-Examples of foundational tasks (adjust based on your project):
-
-- [ ] T004 Define base Resource types for blocks
-- [ ] T005 Setup Global Signal Bus (Autoload) if needed
-- [ ] T006 Create main Game scene and Grid container
-- [ ] T007 Implement basic 10x10 Grid logic (2D Array)
-- [ ] T008 Setup UI structure (Score, Game Over)
-
-**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
+- [ ] T001 Tạo cấu trúc thư mục (scenes, scripts, resources, tests)
+- [ ] T002 Cấu hình các thiết lập dự án Godot
+- [ ] T003 Thiết lập GUT (Godot Unit Testing) nếu được yêu cầu
 
 ---
 
-## Phase 3: User Story 1 - [Title] (Priority: P1) 🎯 MVP
+## Giai đoạn 2: Nền tảng (Điều kiện tiên quyết ngăn chặn)
 
-**Goal**: [Brief description of what this story delivers]
+**Mục đích**: Cơ sở hạ tầng cốt lõi PHẢI hoàn thành trước khi BẤT KỲ câu chuyện người dùng nào có thể được triển khai
 
-**Independent Test**: [How to verify this story works on its own]
+**⚠️ QUAN TRỌNG**: Không có công việc câu chuyện người dùng nào có thể bắt đầu cho đến khi giai đoạn này hoàn thành
 
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
+Ví dụ về các nhiệm vụ nền tảng (điều chỉnh dựa trên dự án của bạn):
 
-> **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
+- [ ] T004 Định nghĩa các loại Resource cơ bản cho các khối
+- [ ] T005 Thiết lập Bus Tín hiệu Toàn cầu (Autoload) nếu cần
+- [ ] T006 Tạo cảnh Game chính và container Lưới (Grid)
+- [ ] T007 Triển khai logic Lưới 10x10 cơ bản (Mảng 2 chiều)
+- [ ] T008 Thiết lập cấu trúc giao diện người dùng UI (Điểm số, Kết thúc trò chơi)
 
-- [ ] T010 [P] [US1] Unit test for [logic] in tests/unit/test_[name].gd
-- [ ] T011 [P] [US1] Integration test for [interaction] in tests/integration/test_[name].gd
-
-### Implementation for User Story 1
-
-- [ ] T012 [P] [US1] Create [Resource] in resources/[folder]/[name].tres
-- [ ] T013 [P] [US1] Create [Script] in scripts/[folder]/[name].gd
-- [ ] T014 [US1] Create [Scene] in scenes/[folder]/[name].tscn
-- [ ] T015 [US1] Connect signals for [event]
-- [ ] T016 [US1] Implement [logic] in [file].gd
-- [ ] T017 [US1] Add visual feedback/animations
-
-**Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
+**Điểm kiểm tra**: Nền tảng đã sẵn sàng - việc triển khai câu chuyện người dùng hiện có thể bắt đầu song song
 
 ---
 
-## Phase 4: User Story 2 - [Title] (Priority: P2)
+## Giai đoạn 3: Câu chuyện Người dùng 1 - [Tiêu đề] (Ưu tiên: P1) 🎯 MVP
 
-**Goal**: [Brief description of what this story delivers]
+**Mục tiêu**: [Mô tả ngắn gọn về những gì câu chuyện này mang lại]
 
-**Independent Test**: [How to verify this story works on its own]
+**Kiểm thử Độc lập**: [Cách xác minh câu chuyện này hoạt động độc lập]
 
-### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
+### Kiểm thử cho Câu chuyện Người dùng 1 (TÙY CHỌN - chỉ khi có yêu cầu) ⚠️
 
-- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
+> **LƯU Ý: Viết các kiểm thử này TRƯỚC, đảm bảo chúng THẤT BẠI trước khi triển khai**
 
-### Implementation for User Story 2
+- [ ] T010 [P] [US1] Kiểm thử đơn vị (Unit test) cho [logic] trong tests/unit/test_[name].gd
+- [ ] T011 [P] [US1] Kiểm thử tích hợp (Integration test) cho [tương tác] trong tests/integration/test_[name].gd
 
-- [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
-- [ ] T021 [US2] Implement [Service] in src/services/[service].py
-- [ ] T022 [US2] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T023 [US2] Integrate with User Story 1 components (if needed)
+### Triển khai cho Câu chuyện Người dùng 1
 
-**Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
+- [ ] T012 [P] [US1] Tạo [Resource] trong resources/[folder]/[name].tres
+- [ ] T013 [P] [US1] Tạo [Script] trong scripts/[folder]/[name].gd
+- [ ] T014 [US1] Tạo [Scene] in scenes/[folder]/[name].tscn
+- [ ] T015 [US1] Kết nối các tín hiệu cho [sự kiện]
+- [ ] T016 [US1] Triển khai [logic] trong [file].gd
+- [ ] T017 [US1] Thêm phản hồi thị giác/hiệu ứng hoạt hình
 
----
-
-## Phase 5: User Story 3 - [Title] (Priority: P3)
-
-**Goal**: [Brief description of what this story delivers]
-
-**Independent Test**: [How to verify this story works on its own]
-
-### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
-
-- [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
-
-### Implementation for User Story 3
-
-- [ ] T026 [P] [US3] Create [Entity] model in src/models/[entity].py
-- [ ] T027 [US3] Implement [Service] in src/services/[service].py
-- [ ] T028 [US3] Implement [endpoint/feature] in src/[location]/[file].py
-
-**Checkpoint**: All user stories should now be independently functional
+**Điểm kiểm tra**: Tại thời điểm này, Câu chuyện Người dùng 1 sẽ hoạt động đầy đủ và có thể kiểm thử độc lập
 
 ---
 
-[Add more user story phases as needed, following the same pattern]
+## Giai đoạn 4: Câu chuyện Người dùng 2 - [Tiêu đề] (Ưu tiên: P2)
+
+**Mục tiêu**: [Mô tả ngắn gọn về những gì câu chuyện này mang lại]
+
+**Kiểm thử Độc lập**: [Cách xác minh câu chuyện này hoạt động độc lập]
+
+### Kiểm thử cho Câu chuyện Người dùng 2 (TÙY CHỌN - chỉ khi có yêu cầu) ⚠️
+
+- [ ] T018 [P] [US2] Kiểm thử đơn vị cho [logic] trong tests/unit/test_[name].gd
+- [ ] T019 [P] [US2] Kiểm thử tích hợp cho [tương tác] trong tests/integration/test_[name].gd
+
+### Triển khai cho Câu chuyện Người dùng 2
+
+- [ ] T020 [P] [US2] Tạo [Script/Resource] trong [đường dẫn]
+- [ ] T021 [US2] Triển khai logic cho [tính năng]
+- [ ] T022 [US2] Tích hợp với các thành phần của Câu chuyện Người dùng 1 (nếu cần)
+
+**Điểm kiểm tra**: Tại thời điểm này, các Câu chuyện Người dùng 1 VÀ 2 đều hoạt động độc lập
 
 ---
 
-## Phase N: Polish & Cross-Cutting Concerns
+## Giai đoạn N: Trau chuốt & Các vấn đề xuyên suốt
 
-**Purpose**: Improvements that affect multiple user stories
+**Mục đích**: Các cải tiến ảnh hưởng đến nhiều câu chuyện người dùng
 
-- [ ] TXXX [P] Documentation updates in docs/
-- [ ] TXXX Code cleanup and refactoring
-- [ ] TXXX Performance optimization across all stories
-- [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
-- [ ] TXXX Security hardening
-- [ ] TXXX Run quickstart.md validation
-
----
-
-## Dependencies & Execution Order
-
-### Phase Dependencies
-
-- **Setup (Phase 1)**: No dependencies - can start immediately
-- **Foundational (Phase 2)**: Depends on Setup completion - BLOCKS all user stories
-- **User Stories (Phase 3+)**: All depend on Foundational phase completion
-  - User stories can then proceed in parallel (if staffed)
-  - Or sequentially in priority order (P1 → P2 → P3)
-- **Polish (Final Phase)**: Depends on all desired user stories being complete
-
-### User Story Dependencies
-
-- **User Story 1 (P1)**: Can start after Foundational (Phase 2) - No dependencies on other stories
-- **User Story 2 (P2)**: Can start after Foundational (Phase 2) - May integrate with US1 but should be independently testable
-- **User Story 3 (P3)**: Can start after Foundational (Phase 2) - May integrate with US1/US2 but should be independently testable
-
-### Within Each User Story
-
-- Tests (if included) MUST be written and FAIL before implementation
-- Models before services
-- Services before endpoints
-- Core implementation before integration
-- Story complete before moving to next priority
-
-### Parallel Opportunities
-
-- All Setup tasks marked [P] can run in parallel
-- All Foundational tasks marked [P] can run in parallel (within Phase 2)
-- Once Foundational phase completes, all user stories can start in parallel (if team capacity allows)
-- All tests for a user story marked [P] can run in parallel
-- Models within a story marked [P] can run in parallel
-- Different user stories can be worked on in parallel by different team members
+- [ ] TXXX [P] Cập nhật tài liệu trong docs/
+- [ ] TXXX Dọn dẹp mã và tái cấu trúc (refactoring)
+- [ ] TXXX Tối ưu hóa hiệu suất cho tất cả các câu chuyện
+- [ ] TXXX [P] Thêm các kiểm thử đơn vị bổ sung (nếu được yêu cầu) trong tests/unit/
+- [ ] TXXX Tăng cường bảo mật
 
 ---
 
-## Parallel Example: User Story 1
+## Phụ thuộc & Thứ tự Thực hiện
 
-```bash
-# Launch all tests for User Story 1 together (if tests requested):
-Task: "Contract test for [endpoint] in tests/contract/test_[name].py"
-Task: "Integration test for [user journey] in tests/integration/test_[name].py"
+### Phụ thuộc Giai đoạn
 
-# Launch all models for User Story 1 together:
-Task: "Create [Entity1] model in src/models/[entity1].py"
-Task: "Create [Entity2] model in src/models/[entity2].py"
-```
-
----
-
-## Implementation Strategy
-
-### MVP First (User Story 1 Only)
-
-1. Complete Phase 1: Setup
-2. Complete Phase 2: Foundational (CRITICAL - blocks all stories)
-3. Complete Phase 3: User Story 1
-4. **STOP and VALIDATE**: Test User Story 1 independently
-5. Deploy/demo if ready
-
-### Incremental Delivery
-
-1. Complete Setup + Foundational → Foundation ready
-2. Add User Story 1 → Test independently → Deploy/Demo (MVP!)
-3. Add User Story 2 → Test independently → Deploy/Demo
-4. Add User Story 3 → Test independently → Deploy/Demo
-5. Each story adds value without breaking previous stories
-
-### Parallel Team Strategy
-
-With multiple developers:
-
-1. Team completes Setup + Foundational together
-2. Once Foundational is done:
-   - Developer A: User Story 1
-   - Developer B: User Story 2
-   - Developer C: User Story 3
-3. Stories complete and integrate independently
+- **Thiết lập (Giai đoạn 1)**: Không có phụ thuộc - có thể bắt đầu ngay lập tức
+- **Nền tảng (Giai đoạn 2)**: Phụ thuộc vào việc hoàn thành Thiết lập - NGĂN CHẶN tất cả các câu chuyện người dùng
+- **Các Câu chuyện Người dùng (Giai đoạn 3+)**: Tất cả đều phụ thuộc vào việc hoàn thành giai đoạn Nền tảng
+  - Các câu chuyện người dùng sau đó có thể tiến hành song song (nếu có nhân lực)
+  - Hoặc tuần tự theo thứ tự ưu tiên (P1 → P2 → P3)
+- **Trau chuốt (Giai đoạn cuối)**: Phụ thuộc vào việc hoàn thành tất cả các câu chuyện người dùng mong muốn
 
 ---
 
-## Notes
+## Chiến lược Triển khai
 
-- [P] tasks = different files, no dependencies
-- [Story] label maps task to specific user story for traceability
-- Each user story should be independently completable and testable
-- Verify tests fail before implementing
-- Commit after each task or logical group
-- Stop at any checkpoint to validate story independently
-- Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence
+### MVP Trước (Chỉ Câu chuyện Người dùng 1)
+
+1. Hoàn thành Giai đoạn 1: Thiết lập
+2. Hoàn thành Giai đoạn 2: Nền tảng (QUAN TRỌNG - ngăn chặn tất cả các câu chuyện)
+3. Hoàn thành Giai đoạn 3: Câu chuyện Người dùng 1
+4. **DỪNG và XÁC THỰC**: Kiểm thử Câu chuyện Người dùng 1 độc lập
+5. Triển khai/trình diễn nếu đã sẵn sàng
+
+### Bàn giao Tăng dần
+
+1. Hoàn thành Thiết lập + Nền tảng → Nền tảng đã sẵn sàng
+2. Thêm Câu chuyện Người dùng 1 → Kiểm thử độc lập → Triển khai/Trình diễn (MVP!)
+3. Thêm Câu chuyện Người dùng 2 → Kiểm thử độc lập → Triển khai/Trình diễn
+4. Mỗi câu chuyện thêm giá trị mà không phá vỡ các câu chuyện trước đó

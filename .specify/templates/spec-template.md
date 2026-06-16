@@ -1,131 +1,131 @@
-# Feature Specification: [FEATURE NAME]
+# Bản Đặc tả Tính năng: [TÊN TÍNH NĂNG]
 
-**Feature Branch**: `[###-feature-name]`
+**Nhánh Tính năng**: `[###-feature-name]`
 
-**Created**: [DATE]
+**Ngày tạo**: [DATE]
 
-**Status**: Draft
+**Trạng thái**: Nháp
 
-**Input**: User description: "$ARGUMENTS"
+**Đầu vào**: Mô tả của người dùng: "$ARGUMENTS"
 
-## User Scenarios & Testing *(mandatory)*
+## Kịch bản Người dùng & Kiểm thử *(bắt buộc)*
 
 <!--
-  IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
-  Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
-  you should still have a viable MVP (Minimum Viable Product) that delivers value.
+  QUAN TRỌNG: Các câu chuyện người dùng nên được ƯU TIÊN như các hành trình người dùng được sắp xếp theo tầm quan trọng.
+  Mỗi câu chuyện/hành trình người dùng phải có thể KIỂM THỬ ĐỘC LẬP - nghĩa là nếu bạn chỉ triển khai MỘT trong số chúng,
+  bạn vẫn nên có một MVP (Sản phẩm Khả thi Tối thiểu) có giá trị.
 
-  Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
-  Think of each story as a standalone slice of functionality that can be:
-  - Developed independently
-  - Tested independently
-  - Deployed independently
-  - Demonstrated to users independently
+  Gán mức độ ưu tiên (P1, P2, P3, v.v.) cho mỗi câu chuyện, trong đó P1 là quan trọng nhất.
+  Hãy coi mỗi câu chuyện là một lát cắt chức năng độc lập có thể:
+  - Phát triển độc lập
+  - Kiểm thử độc lập
+  - Triển khai độc lập
+  - Trình diễn cho người dùng độc lập
 -->
 
-### User Story 1 - [Brief Title] (Priority: P1)
+### Câu chuyện Người dùng 1 - [Tiêu đề ngắn] (Ưu tiên: P1)
 
-[Describe this user journey in plain language]
+[Mô tả hành trình người dùng này bằng ngôn ngữ thông thường]
 
-**Why this priority**: [Explain the value and why it has this priority level]
+**Lý do ưu tiên**: [Giải thích giá trị và tại sao nó có mức độ ưu tiên này]
 
-**Independent Test**: [Describe how this can be tested independently - e.g., "Can be fully tested by [specific action] and delivers [specific value]"]
+**Kiểm thử Độc lập**: [Mô tả cách kiểm thử độc lập - ví dụ: "Có thể kiểm thử đầy đủ bằng [hành động cụ thể] và mang lại [giá trị cụ thể]"]
 
-**Acceptance Scenarios**:
+**Kịch bản Chấp nhận**:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
-2. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **Cho** [trạng thái ban đầu], **Khi** [hành động], **Thì** [kết quả mong đợi]
+2. **Cho** [trạng thái ban đầu], **Khi** [hành động], **Thì** [kết quả mong đợi]
 
 ---
 
-### User Story 2 - [Brief Title] (Priority: P2)
+### Câu chuyện Người dùng 2 - [Tiêu đề ngắn] (Ưu tiên: P2)
 
-[Describe this user journey in plain language]
+[Mô tả hành trình người dùng này bằng ngôn ngữ thông thường]
 
-**Why this priority**: [Explain the value and why it has this priority level]
+**Lý do ưu tiên**: [Giải thích giá trị và tại sao nó có mức độ ưu tiên này]
 
-**Independent Test**: [Describe how this can be tested independently]
+**Kiểm thử Độc lập**: [Mô tả cách kiểm thử độc lập]
 
-**Acceptance Scenarios**:
+**Kịch bản Chấp nhận**:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
-
----
-
-### User Story 3 - [Brief Title] (Priority: P3)
-
-[Describe this user journey in plain language]
-
-**Why this priority**: [Explain the value and why it has this priority level]
-
-**Independent Test**: [Describe how this can be tested independently]
-
-**Acceptance Scenarios**:
-
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **Cho** [trạng thái ban đầu], **Khi** [hành động], **Thì** [kết quả mong đợi]
 
 ---
 
-[Add more user stories as needed, each with an assigned priority]
+### Câu chuyện Người dùng 3 - [Tiêu đề ngắn] (Ưu tiên: P3)
 
-### Edge Cases
+[Mô tả hành trình người dùng này bằng ngôn ngữ thông thường]
 
-<!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right edge cases.
--->
+**Lý do ưu tiên**: [Giải thích giá trị và tại sao nó có mức độ ưu tiên này]
 
-- What happens when [boundary condition]?
-- How does system handle [error scenario]?
+**Kiểm thử Độc lập**: [Mô tả cách kiểm thử độc lập]
 
-## Requirements *(mandatory)*
+**Kịch bản Chấp nhận**:
 
-<!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right functional requirements.
--->
+1. **Cho** [trạng thái ban đầu], **Khi** [hành động], **Thì** [kết quả mong đợi]
 
-### Functional Requirements
+---
 
-- **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]
-- **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
-- **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
-- **FR-005**: System MUST [behavior, e.g., "log all security events"]
+[Thêm câu chuyện người dùng nếu cần, mỗi câu chuyện gán một mức ưu tiên]
 
-*Example of marking unclear requirements:*
-
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
-
-### Key Entities *(include if feature involves data)*
-
-- **[Entity 1]**: [What it represents, key attributes without implementation]
-- **[Entity 2]**: [What it represents, relationships to other entities]
-
-## Success Criteria *(mandatory)*
+### Các Trường hợp Biên (Edge Cases)
 
 <!--
-  ACTION REQUIRED: Define measurable success criteria.
-  These must be technology-agnostic and measurable.
+  YÊU CẦU HÀNH ĐỘNG: Nội dung trong phần này là các ví dụ giữ chỗ.
+  Hãy điền các trường hợp biên phù hợp.
 -->
 
-### Measurable Outcomes
+- Điều gì xảy ra khi [điều kiện biên]?
+- Hệ thống xử lý thế nào khi [kịch bản lỗi]?
 
-- **SC-001**: [Measurable metric, e.g., "Users can complete account creation in under 2 minutes"]
-- **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
-- **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
-- **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
-
-## Assumptions
+## Yêu cầu *(bắt buộc)*
 
 <!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right assumptions based on reasonable defaults
-  chosen when the feature description did not specify certain details.
+  YÊU CẦU HÀNH ĐỘNG: Nội dung trong phần này là các ví dụ giữ chỗ.
+  Hãy điền các yêu cầu chức năng phù hợp.
 -->
 
-- [Assumption about target users, e.g., "Users have stable internet connectivity"]
-- [Assumption about scope boundaries, e.g., "Mobile support is out of scope for v1"]
-- [Assumption about data/environment, e.g., "Existing authentication system will be reused"]
-- [Dependency on existing system/service, e.g., "Requires access to the existing user profile API"]
+### Yêu cầu Chức năng
+
+- **FR-001**: Hệ thống PHẢI [khả năng cụ thể, ví dụ: "cho phép người dùng tạo tài khoản"]
+- **FR-002**: Hệ thống PHẢI [khả năng cụ thể, ví dụ: "xác thực địa chỉ email"]
+- **FR-003**: Người dùng PHẢI có thể [tương tác chính, ví dụ: "đặt lại mật khẩu"]
+- **FR-004**: Hệ thống PHẢI [yêu cầu dữ liệu, ví dụ: "lưu trữ tùy chọn người dùng"]
+- **FR-005**: Hệ thống PHẢI [hành vi, ví dụ: "ghi nhật ký tất cả các sự kiện bảo mật"]
+
+*Ví dụ về đánh dấu yêu cầu chưa rõ ràng:*
+
+- **FR-006**: Hệ thống PHẢI xác thực người dùng qua [CẦN LÀM RÕ: phương thức xác thực chưa được chỉ định - email/mật khẩu, SSO, OAuth?]
+- **FR-007**: Hệ thống PHẢI giữ lại dữ liệu người dùng trong [CẦN LÀM RÕ: thời gian lưu trữ chưa được chỉ định]
+
+### Các Thực thể Chính *(bao gồm nếu tính năng liên quan đến dữ liệu)*
+
+- **[Thực thể 1]**: [Nó đại diện cho cái gì, các thuộc tính chính mà không cần triển khai]
+- **[Thực thể 2]**: [Nó đại diện cho cái gì, mối quan hệ với các thực thể khác]
+
+## Tiêu chí Thành công *(bắt buộc)*
+
+<!--
+  YÊU CẦU HÀNH ĐỘNG: Định nghĩa các tiêu chí thành công có thể đo lường được.
+  Những tiêu chí này phải không phụ thuộc vào công nghệ và có thể đo lường được.
+-->
+
+### Kết quả Có thể Đo lường
+
+- **SC-001**: [Số liệu đo lường, ví dụ: "Người dùng có thể hoàn thành việc tạo tài khoản trong dưới 2 phút"]
+- **SC-002**: [Số liệu đo lường, ví dụ: "Hệ thống xử lý 1000 người dùng đồng thời mà không giảm hiệu suất"]
+- **SC-003**: [Chỉ số hài lòng của người dùng, ví dụ: "90% người dùng hoàn thành thành công nhiệm vụ chính trong lần thử đầu tiên"]
+- **SC-004**: [Chỉ số kinh doanh, ví dụ: "Giảm 50% số phiếu hỗ trợ liên quan đến [X]"]
+
+## Các Giả định
+
+<!--
+  YÊU CẦU HÀNH ĐỘNG: Nội dung trong phần này là các ví dụ giữ chỗ.
+  Hãy điền các giả định phù hợp dựa trên các mặc định hợp lý được chọn
+  khi mô tả tính năng không chỉ rõ một số chi tiết nhất định.
+-->
+
+- [Giả định về người dùng mục tiêu, ví dụ: "Người dùng có kết nối internet ổn định"]
+- [Giả định về ranh giới phạm vi, ví dụ: "Hỗ trợ di động nằm ngoài phạm vi cho phiên bản v1"]
+- [Giả định về dữ liệu/môi trường, ví dụ: "Hệ thống xác thực hiện tại sẽ được tái sử dụng"]
+- [Phụ thuộc vào hệ thống/dịch vụ hiện có, ví dụ: "Yêu cầu quyền truy cập vào API hồ sơ người dùng hiện tại"]
