@@ -37,6 +37,7 @@ Tính năng này triển khai hệ thống di chuyển rời rạc trên lưới
 - [x] **Dữ liệu Tài nguyên**: Các loại khối Gray và Ice sẽ được định nghĩa qua Resource (FR-003, FR-004).
 - [x] **Xác thực Thực nghiệm**: Thuật toán sinh màn được yêu cầu đảm bảo 100% khả năng giải (FR-007).
 - [x] **Ngôn ngữ**: Tài liệu kế hoạch và thiết kế sử dụng tiếng Việt (Nguyên tắc VI).
+- [x] **Điều phối Tích hợp**: Cảnh Main sẽ làm orchestrator chính để lắp ghép các thành phần (FR-008).
 
 ## Cấu trúc Dự án
 
@@ -46,10 +47,10 @@ Tính năng này triển khai hệ thống di chuyển rời rạc trên lưới
 specs/001-grid-movement-reverse-gen/
 ├── plan.md              # Tệp này
 ├── research.md          # Đầu ra Giai đoạn 0
-├── data-model.md        # Đầu ra Giai đoạn 1
+├── data-model.md        # Đầu ra Giai đoạn 1 (Đã cập nhật logic Orchestration)
 ├── quickstart.md        # Đầu ra Giai đoạn 1
-├── contracts/           # Đầu ra Giai đoạn 1
-└── tasks.md             # Đầu ra Giai đoạn 2
+├── contracts/           # Đầu ra Giai đoạn 1 (Đã cập nhật Interface điều phối)
+└── tasks.md             # Đầu ra Giai đoạn 2 (Cần cập nhật các nhiệm vụ tích hợp)
 ```
 
 ### Mã nguồn (gốc kho lưu trữ)
@@ -57,26 +58,27 @@ specs/001-grid-movement-reverse-gen/
 ```text
 scenes/
 ├── main/
+│   ├── Main.tscn        # Cảnh điều phối chính
+│   └── Main.gd          # Script quản lý vòng đời game
 ├── ui/
+│   └── HUD.tscn         # Giao diện người dùng
 └── game_objects/
+    ├── Player.tscn
+    └── Block.tscn
 
 scripts/
 ├── autoload/
-├── ui/
+│   └── GameEvents.gd    # Tín hiệu toàn cục
 └── logic/
-
-resources/
-├── blocks/
-├── themes/
-└── data/
-
-tests/
-├── unit/
-├── integration/
-└── functional/
+    ├── GridLogic.gd     # Xử lý dữ liệu lưới
+    ├── LevelGenerator.gd # Thuật toán sinh màn
+    └── BlockData.gd     # Định nghĩa Resource
 ```
 
-**Quyết định Cấu trúc**: Tuân theo cấu trúc Godot chuẩn đã thống nhất trong Hiến chương. Logic lưới sẽ nằm trong `scripts/logic/`, các thực thể khối trong `scenes/game_objects/`.
+**Quyết định Cấu trúc**: Tuân theo cấu trúc Godot chuẩn đã thống nhất trong Hiến chương. `Main.gd` sẽ thực hiện quy trình:
+1. `_ready()`: Gọi `LevelGenerator.generate_level()`.
+2. Nhận dữ liệu trạng thái: Khởi tạo thực thể trực quan (`add_child`) tương ứng với vị trí logic.
+3. Liên kết tham chiếu: Mọi thực thể nhận chung 1 instance của `GridLogic`.
 
 ## Theo dõi Độ phức tạp
 

@@ -51,6 +51,7 @@ Là một hệ thống trò chơi, tôi muốn sinh các màn chơi bằng thu�
 **Kịch bản Chấp nhận**:
 
 1. **Cho** một tập hợp các điểm mục tiêu, **Khi** trình tạo màn chơi bắt đầu, **Thì** nó tạo ra một bố cục nơi các khối có thể tiếp cận và giải được.
+2. **Cho** dữ liệu màn chơi đã sinh ra, **Khi** cảnh Main khởi chạy, **Thì** các thực thể (Nhân vật, Khối) phải được hiển thị đúng vị trí tương ứng trên lưới trực quan.
 
 ## Yêu cầu *(bắt buộc)*
 
@@ -63,6 +64,9 @@ Là một hệ thống trò chơi, tôi muốn sinh các màn chơi bằng thu�
 - **FR-005**: Hệ thống PHẢI phát hiện điều kiện thắng khi tất cả các khối (Xám và Băng) nằm trên các điểm mục tiêu ('X').
 - **FR-006**: Hệ thống PHẢI triển khai thuật toán Sinh màn chơi ngược (Pull Moves) bắt đầu từ trạng thái thắng để tạo bố cục câu đố.
 - **FR-007**: Trình tạo màn chơi PHẢI đảm bảo 100% khả năng giải được cho mọi bản đồ được sinh ra.
+- **FR-008**: Cảnh Main PHẢI chịu trách nhiệm điều phối: gọi LevelGenerator, khởi tạo logic Grid, và sinh ra (spawn) các thực thể Node dựa trên dữ liệu trả về.
+- **FR-009**: Mọi thực thể sinh ra (Player, Block) PHẢI được gán tham chiếu đến đối tượng `grid_logic` chung để đảm bảo tính nhất quán về dữ liệu.
+- **FR-010**: Tại thời điểm khởi tạo, HUD PHẢI ẩn nhãn "YOU WIN!" và thiết lập Score về 0.
 
 ### Các Thực thể Chính
 

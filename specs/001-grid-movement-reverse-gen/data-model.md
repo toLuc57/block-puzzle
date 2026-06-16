@@ -46,7 +46,24 @@
 - `to_pos`: Vector2i.
 - `direction`: Vector2i.
 
-### LevelState
-- `blocks`: Danh sách vị trí các khối.
-- `player_pos`: Vị trí nhân vật.
-- `targets`: Danh sách vị trí các ô 'X'.
+### LevelState (Dictionary trả về cho Main)
+- `blocks`: Danh sách đối tượng `{ "pos": Vector2i, "type": String }`.
+- `player_pos`: Vị trí Vector2i ban đầu của nhân vật.
+- `targets`: Danh sách vị trí Vector2i các ô 'X'.
+
+## 4. Quy trình Điều phối (Main Orchestration)
+
+1. **Giai đoạn Khởi tạo**: `Main.gd` khởi tạo `GridLogic` mới.
+2. **Giai đoạn Sinh màn**: Gọi `LevelGenerator.generate_level()`, nhận về `LevelState`.
+3. **Giai đoạn Ánh xạ (Mapping)**:
+   - Duyệt `LevelState.targets`: Gọi `GridLogic.set_cell(pos, TARGET)`.
+   - Duyệt `LevelState.blocks`:
+     - Instante `Block.tscn`.
+     - Gán `Block.data` dựa trên loại khối (Gray/Ice).
+     - Gán `Block.grid_logic`.
+     - Đặt vị trí Node tương ứng với `pos`.
+     - Thêm vào `GridLogic.blocks`.
+   - Khởi tạo `Player.tscn`:
+     - Gán `Player.grid_logic`.
+     - Đặt vị trí Node tương ứng với `player_pos`.
+4. **Giai đoạn Kết nối**: Lắng nghe tín hiệu từ `GameEvents` để cập nhật HUD.

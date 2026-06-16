@@ -36,8 +36,20 @@ description: "Danh sách nhiệm vụ triển khai Hệ thống lưới di chuy�
 - [x] T004 [P] Định nghĩa Resource `BlockData.gd` trong `scripts/logic/BlockData.gd` (id, color, is_sliding)
 - [x] T005 [P] Thiết lập Autoload `GameEvents.gd` trong `scripts/autoload/GameEvents.gd` cho các tín hiệu toàn cục
 - [x] T006 Tạo lớp `GridLogic.gd` trong `scripts/logic/GridLogic.gd` quản lý mảng 2 chiều 10x10
-- [x] T007 [P] Tạo cảnh `Main.tscn` và Node `GridContainer` để hiển thị bản đồ
+- [ ] T007 [P] Tạo cảnh `Main.tscn` và script `Main.gd` đóng vai trò điều phối chính
 - [x] T008 [P] Thiết lập UI cơ bản (ScoreLabel, WinLabel) trong `scenes/ui/HUD.tscn`
+
+---
+
+## Giai đoạn 6: Tích hợp & Điều phối (MỚI - Giải quyết màn hình trống)
+
+**Mục tiêu**: Kết nối LevelGenerator với cảnh Main để hiển thị game hoàn chỉnh.
+
+- [ ] T032 [US3] Triển khai logic sinh thực thể (`spawn_block`, `spawn_player`) trong `Main.gd`
+- [ ] T033 [US3] Thực hiện quy trình ánh xạ `LevelState` sang các Node trực quan tại `_ready()`
+- [ ] T034 [US3] Truyền tham chiếu `grid_logic` cho mọi thực thể được sinh ra
+- [ ] T035 [US3] Thiết lập nhãn HUD ban đầu (ẩn WinLabel, reset Score)
+- [ ] T036 Kết nối tín hiệu `win_condition_met` từ `Block.gd` tới `Main.gd` để hiển thị WinLabel
 
 **Điểm kiểm tra**: Nền tảng sẵn sàng, logic mảng đã có thể bắt đầu kiểm thử.
 
