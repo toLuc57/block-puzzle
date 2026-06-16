@@ -26,6 +26,11 @@ Tài liệu này hướng dẫn cách kiểm tra thủ công và tự động c�
 2. **Kiểm tra**: Chạy 100 lần sinh màn ngẫu nhiên.
 3. **Mong đợi**: 100% các màn chơi sinh ra phải có ít nhất một chuỗi lệnh đẩy (đảo ngược của chuỗi kéo) để đưa khối về đích.
 
-## 3. Các lệnh hữu ích
+## 3. Các tín hiệu chính
+- `GameEvents.player_moved(from, to)`: Theo dõi vị trí nhân vật.
+- `GameEvents.block_moved(block, from, to)`: Theo dõi chuyển động khối.
+- `GameEvents.win_condition_met()`: Kích hoạt khi thắng.
+
+## 4. Các lệnh hữu ích
 - Chạy test toàn bộ: `godot --headless -s addons/gut/gut_cmdline.gd`
 - Chạy riêng test logic lưới: `godot --headless -s addons/gut/gut_cmdline.gd -gdir=res://tests/unit/ -gtest=test_grid_logic.gd`
