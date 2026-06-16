@@ -8,7 +8,7 @@ var height: int = 10
 var grid: Array = []
 var blocks: Dictionary = {} # Vector2i -> Block Node
 var player_pos: Vector2i = Vector2i.ZERO
-var targets: Array[Vector2i] = []
+var targets: Array = []
 
 func _init(w: int = 10, h: int = 10):
 	width = w
