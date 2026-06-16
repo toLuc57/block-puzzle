@@ -37,17 +37,16 @@ func _setup_level(state: Dictionary):
 	
 	grid_logic.blocks.clear()
 	grid_logic.targets = state.targets
-	
+
 	# Setup targets logic
 	for target_pos in state.targets:
 		grid_logic.set_cell(target_pos, GridLogic.CellType.TARGET)
 		# Set tile index 0 for target marker (X)
-		target_layer.set_cell(target_pos, 0, Vector2i(0, 0))
+		target_layer.set_cell(target_pos, 0, Vector2i(2, 4))
 	
 	# Spawn Blocks
 	for b_data in state.blocks:
 		var block = block_scene.instantiate()
-		grid_container.add_child(block)
 		
 		block.grid_logic = grid_logic
 		block.grid_pos = b_data.pos
@@ -59,13 +58,15 @@ func _setup_level(state: Dictionary):
 			block.data = ice_block_res
 			
 		grid_logic.blocks[b_data.pos] = block
+		grid_container.add_child(block)
 		
 	# Spawn Player
 	var player = player_scene.instantiate()
-	grid_container.add_child(player)
+
 	player.grid_logic = grid_logic
 	player.grid_pos = state.player_pos
 	player.position = Vector2(state.player_pos) * player.cell_size
-
+	grid_container.add_child(player)
+	
 func _on_win():
 	win_label.show()
