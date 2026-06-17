@@ -1,7 +1,11 @@
-[gd_scene format=3 uid="uid://cddxum84e58nu"]
+[gd_scene load_steps=10 format=3 uid="uid://cddxum84e58nu"]
 
-[ext_resource type="Script" uid="uid://dbrata01fiwh1" path="res://scenes/main/Main.gd" id="1_script"]
+[ext_resource type="Script" path="res://scenes/main/Main.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://6qrqmh3jb2jk" path="res://art/Grass.png" id="2_nha0i"]
+[ext_resource type="PackedScene" uid="uid://hud_scene" path="res://scenes/ui/HUD.tscn" id="3_hud"]
+[ext_resource type="PackedScene" uid="uid://block_legend_scene" path="res://scenes/ui/BlockLegend.tscn" id="4_legend"]
+[ext_resource type="PackedScene" uid="uid://victory_popup_scene" path="res://scenes/ui/VictoryPopup.tscn" id="5_victory"]
+[ext_resource type="StyleBox" uid="uid://hud_border_style" path="res://resources/themes/hud_border.tres" id="6_style"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q24mn"]
 texture = ExtResource("2_nha0i")
@@ -72,7 +76,7 @@ texture = ExtResource("2_nha0i")
 2:6/0 = 0
 3:6/0 = 0
 4:6/0 = 0
-5:6/0 = 0
+5:5/0 = 0
 6:6/0 = 0
 7:6/0 = 0
 8:6/0 = 0
@@ -80,44 +84,82 @@ texture = ExtResource("2_nha0i")
 [sub_resource type="TileSet" id="TileSet_gyg6b"]
 sources/0 = SubResource("TileSetAtlasSource_q24mn")
 
-[node name="Main" type="Node2D" unique_id=497859903]
-script = ExtResource("1_script")
-
-[node name="TargetLayer" type="TileMapLayer" parent="." unique_id=1256133385]
-unique_name_in_owner = true
-tile_set = SubResource("TileSet_gyg6b")
-
-[node name="GridContainer" type="Node2D" parent="." unique_id=1833192775]
-unique_name_in_owner = true
-
-[node name="HUD" type="CanvasLayer" parent="." unique_id=552823926]
-
-[node name="Control" type="Control" parent="HUD" unique_id=400912869]
+[node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_script")
 
-[node name="ScoreLabel" type="Label" parent="HUD/Control" unique_id=1539544789]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Score: 0"
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
 
-[node name="WinLabel" type="Label" parent="HUD/Control" unique_id=1952225611]
+[node name="TopPanel" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+
+[node name="HUD" parent="VBoxContainer/TopPanel" instance=ExtResource("3_hud")]
+layout_mode = 2
+
+[node name="GamePanel" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("6_style")
+
+[node name="GameArea" type="SubViewportContainer" parent="VBoxContainer/GamePanel"]
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/GamePanel/GameArea"]
+handle_input_locally = false
+size = Vector2i(800, 440)
+render_target_update_mode = 4
+
+[node name="World" type="Node2D" parent="VBoxContainer/GamePanel/GameArea/SubViewport"]
+unique_name_in_owner = true
+scale = Vector2(3, 3)
+
+[node name="TargetLayer" type="TileMapLayer" parent="VBoxContainer/GamePanel/GameArea/SubViewport/World"]
+unique_name_in_owner = true
+tile_set = SubResource("TileSet_gyg6b")
+
+[node name="GridContainer" type="Node2D" parent="VBoxContainer/GamePanel/GameArea/SubViewport/World"]
+unique_name_in_owner = true
+
+[node name="Camera2D" type="Camera2D" parent="VBoxContainer/GamePanel/GameArea/SubViewport/World"]
+unique_name_in_owner = true
+position = Vector2(80, 80)
+
+[node name="BottomPanel" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+
+[node name="BlockLegend" parent="VBoxContainer/BottomPanel" instance=ExtResource("4_legend")]
+layout_mode = 2
+
+[node name="VictoryLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
 visible = false
+
+[node name="VictoryPopup" parent="VictoryLayer" instance=ExtResource("5_victory")]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
+offset_left = -100.0
+offset_top = -60.0
+offset_right = 100.0
+offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "YOU WIN!"

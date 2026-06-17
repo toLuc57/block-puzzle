@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://block_legend_scene"]
+
+[ext_resource type="Script" path="res://scripts/ui/BlockLegend.gd" id="1_script"]
+[ext_resource type="StyleBox" uid="uid://hud_border_style" path="res://resources/themes/hud_border.tres" id="2_style"]
+
+[node name="BlockLegend" type="PanelContainer"]
+theme_override_styles/panel = ExtResource("2_style")
+script = ExtResource("1_script")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="HBox" type="HBoxContainer" parent="Margin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
