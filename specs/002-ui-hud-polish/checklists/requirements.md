@@ -28,8 +28,10 @@
 - [x] Kịch bản người dùng bao quát các luồng chính
 - [x] Tính năng đáp ứng các kết quả đo lường được xác định trong Tiêu chí Thành công
 - [x] Không có chi tiết triển khai rò rỉ vào bản đặc tả
+- [x] HUD được căn giữa ngang và có đường viền xác định (FR-001, FR-008)
+- [x] Bảng chú giải khối (Block Legend) được định nghĩa (FR-007)
 
 ## Ghi chú
 
-- Bản đặc tả đã bao quát đầy đủ các yêu cầu từ người dùng về HUD, Victory Pop-up, Visual Polish và Kiến trúc tách biệt.
+- Bản đặc tả đã bao quát đầy đủ các yêu cầu từ người dùng về HUD, Victory Pop-up, Visual Polish, Kiến trúc tách biệt, và các yêu cầu mới về bố cục/chú giải.
 - Ngôn ngữ sử dụng là tiếng Việt theo đúng Hiến chương dự án.

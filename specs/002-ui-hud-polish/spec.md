@@ -8,11 +8,18 @@
 
 **Đầu vào**: Mô tả của người dùng: "Thiết kế và lập trình giao diện người dùng (User Interface) trực quan, hiện đại, hỗ trợ tốt cho trải nghiệm giải đố bằng Godot Engine 4.x. Yêu cầu chi tiết cho UI bao gồm: 1. Giao diện HUD trong màn chơi (In-game HUD): Thay thế Text thuần của ScoreLabel bằng một UI Panel nằm ở góc trên màn hình, hiển thị: Số bước đi hiện tại (Move Count), Số bước tối ưu (Target Moves - lấy từ thuật toán A* nếu có), và Số khối đá đã vào vị trí / Tổng số khối (vị dụ: "Blocks: 2/3"). Thêm nút "Reset (Phím R)" và nút "Undo (Ctrl+Z)" trực quan trên màn hình để người chơi click bằng chuột nếu bị kẹt khối. 2. Màn hình thông báo Chiến thắng (Victory Pop-up Scene): Tạo một UI Pop-up ẩn, chỉ hiển thị khi toàn bộ khối đá đã nằm trên ô "X". Hiển thị thông báo chúc mừng, tổng kết số bước đi của người chơi. Thêm 2 nút chức năng: "Màn tiếp theo (Next Level)" để kích hoạt lại bộ Generator sinh map mới, và "Chơi lại (Replay)". 3. Hiệu ứng đồ họa (Visual Polish): Tận dụng hệ thống Control Nodes của Godot (CanvasLayer, MarginContainer, VBoxContainer, HBoxContainer) để UI tự động co giãn theo độ phân giải màn hình (Responsive). Thêm hiệu ứng Tween nhỏ (ví dụ: Panel hơi nảy lên hoặc đổi màu xanh) mỗi khi có một khối đá được đẩy thành công vào ô "X". Kiến trúc: Tách biệt logic UI sang một script riêng (ví dụ: GameUI.gd) và kết nối với Main.gd thông qua hệ thống Signals của Godot để đảm bảo kiến trúc gọn gàng (Decoupled Architecture). Kết quả: Khi bắt đầu vào game, màn hình chơi phải hiển thị rõ ô nào là tường (WALL), đá xám và đá băng (BLOCK), player, và ô đích (TARGET - được đánh dấu "X")"
 
+## Clarifications
+
+### Session 2026-06-17
+- Q: Bố cục UI và căn chỉnh? → A: HUD và Legend căn giữa ngang, neo ở đỉnh (Top) và đáy (Bottom) màn hình. Tránh middle align để không che khu vực chơi.
+- Q: Định dạng chú giải khối (Block Concepts)? → A: Hiển thị icon khối kèm văn bản mô tả ngắn gọn về đặc tính/cách dùng ngay dưới màn chơi.
+- Q: Phong cách đường viền (Border) của HUD? → A: Sử dụng StyleBoxFlat với đường viền đơn sắc rõ nét và bo góc nhẹ.
+
 ## Kịch bản Người dùng & Kiểm thử *(bắt buộc)*
 
 ### Câu chuyện Người dùng 1 - Theo dõi tiến trình màn chơi qua HUD (Ưu tiên: P1)
 
-Người chơi cần biết họ đã đi bao nhiêu bước, còn bao xa để đạt mức tối ưu và bao nhiêu khối đã vào vị trí để điều chỉnh chiến thuật.
+Người chơi cần biết họ đã đi bao nhiêu bước, còn bao xa để đạt mức tối ưu và bao nhiêu khối đã vào vị trí để điều chỉnh chiến thuật. HUD được hiển thị ở vị trí căn giữa ngang phía trên màn chơi với đường viền rõ nét để dễ quan sát.
 
 **Lý do ưu tiên**: Đây là thông tin cốt lõi để người chơi tham gia vào gameplay giải đố một cách có ý thức về hiệu quả.
 
@@ -46,12 +53,24 @@ Người chơi muốn được ghi nhận thành tích khi giải xong đố và
 
 **Lý do ưu tiên**: Đây là vòng lặp phản hồi tích cực (positive feedback loop) giúp người chơi cảm thấy thỏa mãn và tiếp tục gắn bó với game.
 
-**Kiểm thử Độc lập**: Đẩy tất cả các khối vào ô đích và kiểm tra xem màn hình Victory có xuất hiện với đầy đủ thông tin và nút bấm không.
+**Kiểm thử Độc lập**: Đẩy tất cả các khối vào ô đích và kiểm tra xem màn hình Victory có xuất hiện with đầy đủ thông tin và nút bấm không.
 
 **Kịch bản Chấp nhận**:
 
 1. **Cho** khối cuối cùng vừa được đẩy vào ô đích, **Khi** hệ thống phát hiện tất cả khối đã ở đúng vị trí, **Thì** một màn hình Pop-up hiện lên hiển thị "Victory!", tổng số bước đã đi.
 2. **Cho** màn hình Victory đang hiển thị, **Khi** người chơi nhấn "Next Level", **Thì** màn chơi hiện tại biến mất và một màn chơi mới được sinh ra ngẫu nhiên.
+
+---
+
+### Câu chuyện Người dùng 4 - Tìm hiểu luật chơi qua Chú giải Khối (Ưu tiên: P2)
+
+Người chơi mới cần hiểu ý nghĩa và cách hoạt động của từng loại khối để có thể giải đố.
+
+**Lý do ưu tiên**: Giảm rào cản gia nhập cho người chơi mới và làm rõ các cơ chế đặc biệt (như khối băng).
+
+**Kịch bản Chấp nhận**:
+
+1. **Cho** người chơi đang ở màn chơi, **Khi** nhìn xuống phía dưới khu vực chơi, **Thì** thấy một bảng chú giải (Legend) hiển thị icon từng loại khối kèm mô tả ngắn về đặc tính của chúng.
 
 ---
 
@@ -65,12 +84,14 @@ Người chơi muốn được ghi nhận thành tích khi giải xong đố và
 
 ### Yêu cầu Chức năng
 
-- **FR-001**: Hệ thống PHẢI có một `GameUI` (CanvasLayer) chứa HUD hiển thị: Move Count, Target Moves, và Progress (Blocks: current/total).
+- **FR-001**: Hệ thống PHẢI có một `GameUI` (CanvasLayer) chứa HUD hiển thị: Move Count, Target Moves, và Progress (Blocks: current/total). HUD PHẢI được căn giữa ngang ở phía trên màn hình.
 - **FR-002**: Hệ thống PHẢI cung cấp nút Reset và Undo trên UI, đồng thời hỗ trợ phím tắt tương ứng (R và Ctrl+Z).
 - **FR-003**: Hệ thống PHẢI có màn hình Victory Pop-up ẩn, tự động hiển thị khi điều kiện thắng được thỏa mãn.
 - **FR-004**: `GameUI` PHẢI được tách biệt logic với `Main.gd`, giao tiếp qua các tín hiệu như `update_score(moves)`, `block_placed()`, `level_completed()`.
 - **FR-005**: Hệ thống PHẢI sử dụng Tween để tạo hiệu ứng nảy/đổi màu Panel HUD khi có khối vào đích.
 - **FR-006**: Tất cả các ô trên lưới (WALL, BLOCK, PLAYER, TARGET) PHẢI có hình ảnh phân biệt rõ ràng (ví dụ: Tường là gạch, Đích là chữ X đỏ, Khối là đá).
+- **FR-007**: Hệ thống PHẢI hiển thị bảng Chú giải Khối (Block Legend) ở phía dưới màn chơi, căn giữa ngang, bao gồm icon và mô tả ngắn gọn cho từng loại khối.
+- **FR-008**: HUD PHẢI có đường viền (border) xác định rõ ràng, sử dụng StyleBoxFlat với góc bo tròn nhẹ.
 
 ### Các Thực thể Chính
 

@@ -42,7 +42,7 @@ func _setup_level(state: Dictionary):
 	for target_pos in state.targets:
 		grid_logic.set_cell(target_pos, GridLogic.CellType.TARGET)
 		# Set tile index 0 for target marker (X)
-		target_layer.set_cell(target_pos, 0, Vector2i(2, 4))
+		target_layer.set_cell(target_pos, 0, Vector2i(3, 3))
 	
 	# Spawn Blocks
 	for b_data in state.blocks:
@@ -50,7 +50,7 @@ func _setup_level(state: Dictionary):
 		
 		block.grid_logic = grid_logic
 		block.grid_pos = b_data.pos
-		block.position = Vector2(b_data.pos) * block.cell_size
+		block.position = Vector2(b_data.pos) * GameEvents.cell_size
 		
 		if b_data.type == "gray-block":
 			block.data = gray_block_res
@@ -65,7 +65,7 @@ func _setup_level(state: Dictionary):
 
 	player.grid_logic = grid_logic
 	player.grid_pos = state.player_pos
-	player.position = Vector2(state.player_pos) * player.cell_size
+	player.position = Vector2(state.player_pos) * GameEvents.cell_size
 	grid_container.add_child(player)
 	
 func _on_win():

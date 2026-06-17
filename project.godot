@@ -24,6 +24,7 @@ GameEvents="*res://scripts/autoload/GameEvents.gd"
 window/size/viewport_width=600
 window/size/viewport_height=800
 window/stretch/mode="canvas_items"
+window/stretch/scale=2.0
 
 [input]
 

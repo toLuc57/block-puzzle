@@ -3,7 +3,6 @@ extends Node2D
 @export var data: BlockData
 
 var grid_pos: Vector2i = Vector2i.ZERO
-var cell_size: int = 64
 var is_moving: bool = false
 var grid_logic: GridLogic
 
@@ -38,7 +37,7 @@ func push(direction: Vector2i) -> bool:
 func move_to(target_grid_pos: Vector2i):
 	is_moving = true
 	var old_pos = grid_pos
-	var target_world_pos = Vector2(target_grid_pos) * cell_size
+	var target_world_pos = Vector2(target_grid_pos) * GameEvents.cell_size
 	
 	grid_logic.move_block(old_pos, target_grid_pos)
 	
