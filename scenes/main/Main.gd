@@ -54,11 +54,20 @@ func _setup_level(state: Dictionary):
 	grid_logic.grid = [] # Reset grid
 	grid_logic._init(10, 10) # Re-init grid
 
-	# Setup targets logic
+	# Setup background and targets logic
 	target_layer.clear()
+	
+	# Paint 10x10 background terrain
+	var bg_cells = []
+	for x in range(10):
+		for y in range(10):
+			bg_cells.append(Vector2i(x, y))
+	target_layer.set_cells_terrain_connect(bg_cells, 0, 0)
+	
+	# Paint targets on top (using source 1, atlas 0,0 for eggs)
 	for target_pos in state.targets:
 		grid_logic.set_cell(target_pos, GridLogic.CellType.TARGET)
-		target_layer.set_cell(target_pos, 0, Vector2i(3, 3))
+		target_layer.set_cell(target_pos, 1, Vector2i(0, 0))
 	
 	# Spawn Blocks
 	for b_data in state.blocks:
@@ -98,3 +107,4 @@ func _on_reset_requested():
 
 func _on_win():
 	victory_layer.show()
+	%VictoryPopup.show()

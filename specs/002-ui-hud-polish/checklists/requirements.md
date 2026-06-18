@@ -1,15 +1,15 @@
 # Danh sách kiểm tra Chất lượng Đặc tả: Hệ thống UI và Đánh bóng giao diện (Polish UI/HUD)
 
 **Mục đích**: Xác nhận tính đầy đủ và chất lượng của bản đặc tả trước khi lập kế hoạch.
-**Ngày tạo**: 2026-06-16
-**Tính năng**: [spec.md](../spec.md)
+**Ngày tạo**: 2026-06-18
+**Tính năng**: [specs/002-ui-hud-polish/spec.md](../spec.md)
 
 ## Chất lượng Nội dung
 
-- [x] Không có chi tiết triển khai (ngôn ngữ, framework, API cụ thể trừ khi cần thiết cho giao diện)
-- [x] Tập trung vào giá trị người dùng và nhu cầu trải nghiệm
-- [x] Viết cho các bên liên quan không chuyên về kỹ thuật
-- [x] Tất cả các phần bắt buộc đã hoàn thành
+- [x] No implementation details (languages, frameworks, APIs)
+- [x] Focused on user value and business needs
+- [x] Written for non-technical stakeholders
+- [x] All mandatory sections completed
 
 ## Tính đầy đủ của Yêu cầu
 
@@ -28,10 +28,9 @@
 - [x] Kịch bản người dùng bao quát các luồng chính
 - [x] Tính năng đáp ứng các kết quả đo lường được xác định trong Tiêu chí Thành công
 - [x] Không có chi tiết triển khai rò rỉ vào bản đặc tả
-- [x] HUD được căn giữa ngang và có đường viền xác định (FR-001, FR-008)
-- [x] Bảng chú giải khối (Block Legend) được định nghĩa (FR-007)
-
 ## Ghi chú
 
-- Bản đặc tả đã bao quát đầy đủ các yêu cầu từ người dùng về HUD, Victory Pop-up, Visual Polish, Kiến trúc tách biệt, và các yêu cầu mới về bố cục/chú giải.
+- Bản đặc tả đã được cập nhật để giải quyết các lỗi layout overlay và victory bug.
+- Đã tích hợp yêu cầu sử dụng hệ thống Terrain của Godot một cách trừu tượng (về mặt hành vi nối texture).
+- Đảm bảo tính nhất quán của Game Loop.
 - Ngôn ngữ sử dụng là tiếng Việt theo đúng Hiến chương dự án.

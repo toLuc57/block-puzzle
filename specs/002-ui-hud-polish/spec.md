@@ -1,116 +1,83 @@
-# Bản Đặc tả Tính năng: Hệ thống UI và Đánh bóng giao diện (Polish UI/HUD)
+# Bản Đặc tả Tính năng: Hệ thống UI và Đánh bóng giao diện (Polish UI/HUD) - Cập nhật Phân vùng & Địa hình
 
 **Nhánh Tính năng**: `002-ui-hud-polish`
 
-**Ngày tạo**: 2026-06-16
+**Ngày tạo**: 2026-06-16 (Cập nhật: 2026-06-18)
 
-**Trạng thái**: Nháp
+**Trạng thái**: Nháp (Đã cập nhật lỗi Layout & Terrain)
 
-**Đầu vào**: Mô tả của người dùng: "Thiết kế và lập trình giao diện người dùng (User Interface) trực quan, hiện đại, hỗ trợ tốt cho trải nghiệm giải đố bằng Godot Engine 4.x. Yêu cầu chi tiết cho UI bao gồm: 1. Giao diện HUD trong màn chơi (In-game HUD): Thay thế Text thuần của ScoreLabel bằng một UI Panel nằm ở góc trên màn hình, hiển thị: Số bước đi hiện tại (Move Count), Số bước tối ưu (Target Moves - lấy từ thuật toán A* nếu có), và Số khối đá đã vào vị trí / Tổng số khối (vị dụ: "Blocks: 2/3"). Thêm nút "Reset (Phím R)" và nút "Undo (Ctrl+Z)" trực quan trên màn hình để người chơi click bằng chuột nếu bị kẹt khối. 2. Màn hình thông báo Chiến thắng (Victory Pop-up Scene): Tạo một UI Pop-up ẩn, chỉ hiển thị khi toàn bộ khối đá đã nằm trên ô "X". Hiển thị thông báo chúc mừng, tổng kết số bước đi của người chơi. Thêm 2 nút chức năng: "Màn tiếp theo (Next Level)" để kích hoạt lại bộ Generator sinh map mới, và "Chơi lại (Replay)". 3. Hiệu ứng đồ họa (Visual Polish): Tận dụng hệ thống Control Nodes của Godot (CanvasLayer, MarginContainer, VBoxContainer, HBoxContainer) để UI tự động co giãn theo độ phân giải màn hình (Responsive). Thêm hiệu ứng Tween nhỏ (ví dụ: Panel hơi nảy lên hoặc đổi màu xanh) mỗi khi có một khối đá được đẩy thành công vào ô "X". Kiến trúc: Tách biệt logic UI sang một script riêng (ví dụ: GameUI.gd) và kết nối với Main.gd thông qua hệ thống Signals của Godot để đảm bảo kiến trúc gọn gàng (Decoupled Architecture). Kết quả: Khi bắt đầu vào game, màn hình chơi phải hiển thị rõ ô nào là tường (WALL), đá xám và đá băng (BLOCK), player, và ô đích (TARGET - được đánh dấu "X")"
+**Đầu vào**: Mô tả của người dùng: "Hãy cập nhật và bổ sung tài liệu đặc tả (Spec) trong thư mục "specs/002-ui-hud-polish" để sửa đổi các lỗi nghiêm trọng hiện tại và tích hợp tính năng Terrain: 1. Sửa lỗi Layout đè (UI Overlay Bug): - Mặc dù đã chia 3 phần, Top HUD và Bottom Tutorial vẫn đang đè lên không gian 10x10 của Game Screen. - Yêu cầu: Đóng gói vùng chơi 10x10 vào một SubViewportContainer hoặc thiết lập dứt khoát kích thước cố định cho GridContainer. Khi hoán đổi map hoặc khởi tạo, các vật thể (Player, Blocks) CHỈ ĐƯỢC PHÉP hiển thị và di chuyển hoàn toàn bên trong diện tích an toàn của khu vực trung tâm này, tuyệt đối không được lấn lên phía trên hoặc phía dưới. 2. Tích hợp Hệ thống Địa hình (TileMap Terrain): - Trong TileMapLayer của "scenes/main/Main.tscn", tôi đã cấu hình sẵn 'terrain_set' và 'terrain' (đã paint xong trên Editor). - Yêu cầu: Cập nhật mã nguồn thiết lập level để khi sinh map tự động, hệ thống phải áp dụng tính năng tự động nối tường/đường của Godot bằng cách sử dụng hàm `set_cells_terrain_connect()` của TileMapLayer thay vì vẽ từng ô riêng lẻ. 3. Sửa lỗi màn hình Chiến thắng (Victory Screen Loop Bug): - Lỗi hiện tại: Màn hình Victory chỉ xuất hiện ở màn chơi đầu tiên. Khi người chơi nhấn "Next Level", thuật toán sinh map mới thành công nhưng khi thắng các ải về sau, màn hình Victory không hiển thị nữa. - Yêu cầu: Kiểm tra lại việc ngắt/kết nối lại tín hiệu (Signals) giữa GameEvents và UI khi reset/đổi màn chơi. Đảm bảo hàm `_on_win` luôn được kích hoạt ở TẤT CẢ các ải."
 
 ## Clarifications
 
-### Session 2026-06-17
-- Q: Bố cục UI và căn chỉnh? → A: HUD và Legend căn giữa ngang, neo ở đỉnh (Top) và đáy (Bottom) màn hình. Tránh middle align để không che khu vực chơi.
-- Q: Định dạng chú giải khối (Block Concepts)? → A: Hiển thị icon khối kèm văn bản mô tả ngắn gọn về đặc tính/cách dùng ngay dưới màn chơi.
-- Q: Phong cách đường viền (Border) của HUD? → A: Sử dụng StyleBoxFlat với đường viền đơn sắc rõ nét và bo góc nhẹ.
+### Session 2026-06-18
+- Q: Giải pháp cho Layout Overlay? -> A: Sử dụng SubViewportContainer hoặc PanelContainer với kích thước cố định để đảm bảo Grid 10x10 luôn nằm trong "vùng an toàn", không bị HUD/Legend che khuất.
+- Q: Cách thức áp dụng Terrain? -> A: Sử dụng API `set_cells_terrain_connect` của Godot 4.x để vẽ toàn bộ nền và tường trong một lần gọi, giúp các texture tự động nối liền mạch.
+- Q: Cơ chế hiển thị Victory ổn định? -> A: Đảm bảo Signal `win_condition_met` không bị ngắt kết nối khi chuyển màn và node VictoryPopup được reset trạng thái hiển thị đúng cách.
 
 ## Kịch bản Người dùng & Kiểm thử *(bắt buộc)*
 
 ### Câu chuyện Người dùng 1 - Theo dõi tiến trình màn chơi qua HUD (Ưu tiên: P1)
 
-Người chơi cần biết họ đã đi bao nhiêu bước, còn bao xa để đạt mức tối ưu và bao nhiêu khối đã vào vị trí để điều chỉnh chiến thuật. HUD được hiển thị ở vị trí căn giữa ngang phía trên màn chơi với đường viền rõ nét để dễ quan sát.
+Người chơi cần biết họ đã đi bao nhiêu bước, còn bao xa để đạt mức tối ưu và bao nhiêu khối đã vào vị trí. HUD được hiển thị ở vị trí căn giữa ngang phía trên màn chơi, **tuyệt đối không che khuất khu vực chơi game**.
 
-**Lý do ưu tiên**: Đây là thông tin cốt lõi để người chơi tham gia vào gameplay giải đố một cách có ý thức về hiệu quả.
-
-**Kiểm thử Độc lập**: Có thể kiểm thử bằng cách thực hiện các bước di chuyển và đẩy khối vào đích, sau đó quan sát các con số trên HUD cập nhật theo thời gian thực.
-
-**Kịch bản Chấp nhận**:
-
-1. **Cho** người chơi đang ở trong màn chơi, **Khi** người chơi thực hiện 1 bước di chuyển hợp lệ, **Thì** "Move Count" trên HUD tăng thêm 1.
-2. **Cho** một khối đá đang ở ngoài ô đích, **Khi** người chơi đẩy khối đá đó vào ô "X", **Thì** số lượng "Blocks" trên HUD cập nhật (ví dụ từ 1/3 lên 2/3) và Panel HUD có hiệu ứng Tween phản hồi thị giác.
+**Kiểm thử Độc lập**: Thực hiện di chuyển và quan sát HUD cập nhật mà không bị các vật thể game (Player/Block) lấn vào không gian của HUD.
 
 ---
 
-### Câu chuyện Người dùng 2 - Xử lý khi bị kẹt khối (Ưu tiên: P1)
+### Câu chuyện Người dùng 2 - Trải nghiệm địa hình liền mạch (Ưu tiên: P1)
 
-Người chơi vô tình đẩy khối vào góc chết và cần quay lại bước trước hoặc chơi lại từ đầu mà không cần khởi động lại toàn bộ game.
+Người chơi nhìn thấy bản đồ có cỏ, tường và các đường nối tự nhiên, không bị rời rạc giữa các ô.
 
-**Lý do ưu tiên**: Trò chơi giải đố Sokoban/Block Puzzle rất dễ bị kẹt, việc thiếu chức năng Reset/Undo sẽ gây ức chế cực lớn cho người dùng.
+**Lý do ưu tiên**: Tăng tính thẩm mỹ và độ chuyên nghiệp cho sản phẩm.
 
-**Kiểm thử Độc lập**: Click vào nút Reset trên màn hình hoặc nhấn phím 'R' để xem màn chơi có quay về trạng thái ban đầu không. Tương tự với Undo.
-
-**Kịch bản Chấp nhận**:
-
-1. **Cho** màn chơi đang diễn ra với một số bước đã đi, **Khi** người chơi nhấn nút "Reset" hoặc phím "R", **Thì** vị trí các khối và người chơi quay về ban đầu, "Move Count" về 0.
-2. **Cho** người chơi vừa thực hiện một bước đẩy khối sai, **Khi** người chơi nhấn nút "Undo" hoặc tổ hợp "Ctrl+Z", **Thì** khối đá và người chơi quay về vị trí ngay trước đó, "Move Count" giảm đi 1.
+**Kiểm thử Độc lập**: Sinh màn chơi mới và kiểm tra xem các texture tường và nền có tự động nối khớp (autotile) với nhau không.
 
 ---
 
-### Câu chuyện Người dùng 3 - Hoàn thành màn chơi và tiếp tục (Ưu tiên: P1)
+### Câu chuyện Người dùng 3 - Hoàn thành màn chơi liên tục (Ưu tiên: P1)
 
-Người chơi muốn được ghi nhận thành tích khi giải xong đố và có lựa chọn chuyển sang thử thách mới.
+Người chơi có thể vượt qua nhiều màn chơi liên tiếp và luôn nhận được thông báo chiến thắng mỗi khi hoàn thành.
 
-**Lý do ưu tiên**: Đây là vòng lặp phản hồi tích cực (positive feedback loop) giúp người chơi cảm thấy thỏa mãn và tiếp tục gắn bó với game.
+**Lý do ưu tiên**: Đảm bảo vòng lặp game (Game Loop) không bị đứt quãng.
 
-**Kiểm thử Độc lập**: Đẩy tất cả các khối vào ô đích và kiểm tra xem màn hình Victory có xuất hiện with đầy đủ thông tin và nút bấm không.
-
-**Kịch bản Chấp nhận**:
-
-1. **Cho** khối cuối cùng vừa được đẩy vào ô đích, **Khi** hệ thống phát hiện tất cả khối đã ở đúng vị trí, **Thì** một màn hình Pop-up hiện lên hiển thị "Victory!", tổng số bước đã đi.
-2. **Cho** màn hình Victory đang hiển thị, **Khi** người chơi nhấn "Next Level", **Thì** màn chơi hiện tại biến mất và một màn chơi mới được sinh ra ngẫu nhiên.
-
----
-
-### Câu chuyện Người dùng 4 - Tìm hiểu luật chơi qua Chú giải Khối (Ưu tiên: P2)
-
-Người chơi mới cần hiểu ý nghĩa và cách hoạt động của từng loại khối để có thể giải đố.
-
-**Lý do ưu tiên**: Giảm rào cản gia nhập cho người chơi mới và làm rõ các cơ chế đặc biệt (như khối băng).
-
-**Kịch bản Chấp nhận**:
-
-1. **Cho** người chơi đang ở màn chơi, **Khi** nhìn xuống phía dưới khu vực chơi, **Thì** thấy một bảng chú giải (Legend) hiển thị icon từng loại khối kèm mô tả ngắn về đặc tính của chúng.
+**Kiểm thử Độc lập**: Thắng màn 1, nhấn "Next Level", thắng màn 2 và kiểm tra xem màn hình Victory có hiện lên 100% số lần không.
 
 ---
 
 ### Các Trường hợp Biên (Edge Cases)
 
-- Điều gì xảy ra khi người chơi nhấn Undo liên tục về tận bước đầu tiên? (Hệ thống nên vô hiệu hóa nút Undo khi không còn dữ liệu lịch sử).
-- Hệ thống xử lý thế nào khi thuật toán A* không tìm thấy lời giải tối ưu? (HUD nên hiển thị "Target: N/A" hoặc một giá trị mặc định thay vì gây lỗi crash).
-- UI hiển thị như thế nào trên các màn hình có tỉ lệ cực dị (như 21:9 hoặc màn hình dọc)? (Control Nodes phải được neo - anchor - chính xác để không bị tràn lề).
+- Điều gì xảy ra khi lưới 10x10 lớn hơn diện tích SubViewport? (Hệ thống phải scale lưới hoặc container để vừa khít vùng an toàn).
+- Hệ thống xử lý thế nào khi `set_cells_terrain_connect` nhận danh sách tọa độ không hợp lệ? (Cần kiểm tra bounds trước khi gọi hàm).
 
 ## Yêu cầu *(bắt buộc)*
 
 ### Yêu cầu Chức năng
 
-- **FR-001**: Hệ thống PHẢI có một `GameUI` (CanvasLayer) chứa HUD hiển thị: Move Count, Target Moves, và Progress (Blocks: current/total). HUD PHẢI được căn giữa ngang ở phía trên màn hình.
-- **FR-002**: Hệ thống PHẢI cung cấp nút Reset và Undo trên UI, đồng thời hỗ trợ phím tắt tương ứng (R và Ctrl+Z).
-- **FR-003**: Hệ thống PHẢI có màn hình Victory Pop-up ẩn, tự động hiển thị khi điều kiện thắng được thỏa mãn.
-- **FR-004**: `GameUI` PHẢI được tách biệt logic với `Main.gd`, giao tiếp qua các tín hiệu như `update_score(moves)`, `block_placed()`, `level_completed()`.
-- **FR-005**: Hệ thống PHẢI sử dụng Tween để tạo hiệu ứng nảy/đổi màu Panel HUD khi có khối vào đích.
-- **FR-006**: Tất cả các ô trên lưới (WALL, BLOCK, PLAYER, TARGET) PHẢI có hình ảnh phân biệt rõ ràng (ví dụ: Tường là gạch, Đích là chữ X đỏ, Khối là đá).
-- **FR-007**: Hệ thống PHẢI hiển thị bảng Chú giải Khối (Block Legend) ở phía dưới màn chơi, căn giữa ngang, bao gồm icon và mô tả ngắn gọn cho từng loại khối.
-- **FR-008**: HUD PHẢI có đường viền (border) xác định rõ ràng, sử dụng StyleBoxFlat với góc bo tròn nhẹ.
+- **FR-001**: HUD PHẢI hiển thị Move Count, Target Moves, và Progress. Căn giữa ngang ở Top.
+- **FR-002**: Hệ thống PHẢI có nút Reset (R) và Undo (Ctrl+Z).
+- **FR-003**: Hệ thống PHẢI có màn hình Victory Pop-up, hiển thị mỗi khi thắng ở BẤT KỲ màn nào.
+- **FR-004**: `GameUI` PHẢI tách biệt logic qua Signals.
+- **FR-007**: Hệ thống PHẢI hiển thị bảng Chú giải Khối (Block Legend) ở Bottom.
+- **FR-009**: Hệ thống PHẢI đóng gói khu vực chơi (Grid 10x10) vào một container (ví dụ: `SubViewportContainer`) để đảm bảo **tuyệt đối không có UI overlay** che khuất các vật thể game.
+- **FR-010**: Khi thiết lập level, hệ thống PHẢI sử dụng hàm `set_cells_terrain_connect()` để áp dụng Terrain cho TileMapLayer thay vì đặt từng tile đơn lẻ.
+- **FR-011**: Hệ thống PHẢI đảm bảo tín hiệu `win_condition_met` được kết nối bền vững hoặc tái kết nối chính xác sau mỗi lần sinh màn chơi mới để Victory Screen luôn hiển thị.
 
 ### Các Thực thể Chính
 
-- **GameUI**: Thực thể quản lý toàn bộ giao diện, chịu trách nhiệm cập nhật thông tin hiển thị và bắt sự kiện từ người dùng trên UI.
-- **GameState**: (Ngầm định) Lưu trữ trạng thái lịch sử cho Undo và đếm số bước, cung cấp dữ liệu cho GameUI.
-- **VictoryPopup**: Thành phần con của GameUI, chuyên trách hiển thị kết quả cuối màn.
+- **GameAreaContainer**: Container chuyên dụng bảo vệ không gian hiển thị của lưới 10x10.
+- **TerrainSystem**: Logic tích hợp với TileMapLayer để xử lý việc nối địa hình tự động.
 
 ## Tiêu chí Thành công *(bắt buộc)*
 
 ### Kết quả Có thể Đo lường
 
-- **SC-001**: UI tự động co giãn và giữ đúng vị trí trên các độ phân giải từ 800x600 đến 1920x1080.
-- **SC-002**: Hiệu ứng Tween phản hồi khi đẩy khối vào đích diễn ra trong thời gian dưới 0.3s để đảm bảo cảm giác mượt mà.
-- **SC-003**: Người chơi có thể thực hiện thao tác Reset hoặc Undo và thấy kết quả phản hồi trên màn hình trong dưới 100ms.
-- **SC-004**: 100% các phần tử trong game (Tường, Khối, Người chơi, Đích) có thể phân biệt được ngay lập tức bởi người chơi mới mà không cần hướng dẫn bằng văn bản.
+- **SC-001**: 100% không gian lưới 10x10 hiển thị đầy đủ, không bị HUD/Legend đè lên ở bất kỳ độ phân giải nào từ 800x600.
+- **SC-002**: Texture địa hình tự động nối liền mạch 100% (không có lỗi 'missing border' giữa các ô cùng terrain).
+- **SC-003**: Tỉ lệ xuất hiện màn hình Victory là 10/10 lần thử nghiệm thắng liên tục.
 
 ## Các Giả định
 
-- Hệ thống hiện tại đã có logic di chuyển lưới cơ bản để kết nối tín hiệu.
-- Thuật toán A* hoặc bộ sinh màn chơi có khả năng cung cấp số bước tối ưu (Target Moves).
-- Tài nguyên hình ảnh (Sprites) cơ bản cho WALL, BLOCK, PLAYER đã có sẵn hoặc có thể tạo nhanh bằng Placeholder.
-- Game được chơi trên Godot 4.x với hỗ trợ đầy đủ cho hệ thống Control và Tween mới.
+- TileSet đã được cấu hình đúng `terrain_set` và `terrain` index trong Editor.
+- `GameEvents` là một Autoload bền vững xuyên suốt vòng đời ứng dụng.
+- Kích thước ô (cell_size) là cố định (16px hoặc tùy chọn) và Grid luôn là 10x10.
