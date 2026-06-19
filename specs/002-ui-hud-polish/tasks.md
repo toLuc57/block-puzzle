@@ -1,12 +1,10 @@
-# Nhiệm vụ: Hệ thống UI và Đánh bóng giao diện (Polish UI/HUD)
+# Nhiệm vụ: Hệ thống UI và Đánh bóng giao diện (VBoxContainer Layout & Terrain)
 
 **Đầu vào**: Các tài liệu thiết kế từ `/specs/002-ui-hud-polish/`
 
-**Điều kiện tiên quyết**: plan.md (bắt buộc), spec.md (bắt buộc cho các câu chuyện người dùng), research.md, data-model.md, contracts/
+**Điều kiện tiên quyết**: plan.md, spec.md, research.md, data-model.md, contracts/interfaces.md
 
-**Kiểm thử**: Các nhiệm vụ kiểm thử được bao gồm để đảm bảo logic Undo và cập nhật UI hoạt động chính xác.
-
-**Tổ chức**: Các nhiệm vụ được nhóm theo câu chuyện người dùng để cho phép triển khai và kiểm thử độc lập.
+**Tổ chức**: Các nhiệm vụ được nhóm theo câu chuyện người dùng để cho phép triển khai và kiểm thử độc lập cho mỗi câu chuyện.
 
 ## Định dạng: `[ID] [P?] [Story] Mô tả`
 
@@ -21,103 +19,95 @@
 - **Tài nguyên (Resources)**: `resources/` (ví dụ: `resources/themes/ui_theme.tres`)
 - **Kiểm thử (Tests)**: `tests/` (ví dụ: `tests/unit/test_ui_updates.gd`)
 
-## Giai đoạn 1: Thiết lập (Cơ sở hạ tầng dùng chung)
+## Giai đoạn 1: Thiết lập (Không cần thiết - Dự án đã tồn tại)
 
-**Mục đích**: Cập nhật các Resource hiện có và tạo cấu trúc thư mục UI.
+Dự án đã được khởi tạo ở Feature 001. Bỏ qua giai đoạn này.
 
-- [X] T001 [P] Thêm thuộc tính `description` vào `scripts/logic/BlockData.gd` để hỗ trợ hiển thị Chú giải
-- [X] T002 [P] Cập nhật mô tả cho `resources/blocks/gray_block.tres` và `resources/blocks/ice_block.tres`
-- [X] T003 Tạo thư mục `scenes/ui/` và `scripts/ui/` nếu chưa có
+---
 
 ## Giai đoạn 2: Nền tảng (Điều kiện tiên quyết ngăn chặn)
 
-**Mục đích**: Thiết lập hệ thống Tín hiệu (Signals) và Quản lý trạng thái (GameState) cần thiết cho tất cả các câu chuyện người dùng.
+**Mục đích**: Cấu trúc lại Main.tscn với VBoxContainer layout 3 phần
 
-- [X] T004 [P] Định nghĩa các tín hiệu mới (`score_updated`, `progress_updated`, `victory_triggered`, `undo_requested`, `reset_requested`) trong `scripts/autoload/GameEvents.gd`
-- [X] T005 Triển khai `scripts/logic/GameState.gd` (Autoload) để quản lý lịch sử Undo (Stack) và đếm bước
-- [X] T006 [P] Tạo `StyleBoxFlat` với đường viền xác định và bo góc nhẹ trong `resources/themes/hud_border.tres`
-- [X] T007 Tích hợp trực tiếp HUD, Legend và Victory vào `scenes/main/Main.tscn` sử dụng cấu trúc `VBoxContainer`
+**⚠️ QUAN TRỌNG**: Không có công việc câu chuyện người dùng nào có thể bắt đầu cho đến khi giai đoạn này hoàn thành
 
-**Điểm kiểm tra**: Nền tảng Signal-driven và GameState đã sẵn sàng để tích hợp vào UI.
+- [X] T001 Sao lưu Main.tscn hiện tại trước khi refactor scenes/main/Main.tscn
+- [X] T002 Cấu trúc lại Main.tscn: Thay đổi root node thành VBoxContainer trong scenes/main/Main.tscn
+- [X] T003 [P] Tạo TopPanel (PanelContainer) với chiều cao cố định 60px, size_flags_vertical=SIZE_SHRINK_BEGIN trong scenes/main/Main.tscn
+- [X] T004 [P] Tạo CenterGameArea (Control) với size_flags_vertical=SIZE_EXPAND_FILL trong scenes/main/Main.tscn
+- [X] T005 [P] Tạo BottomPanel (PanelContainer) với chiều cao cố định 50px, size_flags_vertical=SIZE_SHRINK_END trong scenes/main/Main.tscn
+- [X] T006 Di chuyển GridContainer và TargetLayer vào bên trong CenterGameArea trong scenes/main/Main.tscn
+- [X] T007 Cập nhật VictoryLayer: Đặt vào CanvasLayer riêng với layer=10 để luôn hiển thị trên cùng trong scenes/main/Main.tscn
+- [X] T008 Xác minh cấu trúc Node Tree: VBoxContainer > TopPanel/CenterGameArea/BottomPanel bằng cách chạy game và kiểm tra Scene Tree
+
+**Điểm kiểm tra**: Layout 3 phần đã sẵn sàng - việc triển khai câu chuyện người dùng hiện có thể bắt đầu song song
 
 ---
 
 ## Giai đoạn 3: Câu chuyện Người dùng 1 - Theo dõi tiến trình qua HUD (Ưu tiên: P1) 🎯 MVP
 
-**Mục tiêu**: Hiển thị Move Count, Target Moves và Progress (Blocks current/total) ở phía trên màn hình, căn giữa ngang.
+**Mục tiêu**: HUD hiển thị Move Count, Target Moves, Progress ở TopPanel, không bao giờ đè lên vùng chơi game
 
-**Kiểm thử Độc lập**: Chạy game và thấy các con số cập nhật khi di chuyển hoặc đẩy khối vào đích.
-
-### Kiểm thử cho Câu chuyện Người dùng 1
-- [X] T008 [P] [US1] Viết kiểm thử đơn vị cho việc cập nhật số bước và số khối vào đích trong `tests/unit/test_ui_updates.gd`
+**Kiểm thử Độc lập**: Di chuyển Player và quan sát HUD cập nhật mà không có overlap với game objects
 
 ### Triển khai cho Câu chuyện Người dùng 1
-- [X] T009 [P] [US1] Tạo cảnh HUD `scenes/ui/HUD.tscn` sử dụng `MarginContainer` và `HBoxContainer` căn giữa ngang
-- [X] T010 [US1] Áp dụng `resources/themes/hud_border.tres` cho Panel HUD để có đường viền xác định
-- [X] T011 [US1] Triển khai logic cập nhật nhãn (Labels) trong `scripts/ui/HUD.gd` bằng cách lắng nghe signals từ `GameEvents.gd`
-- [X] T012 [US1] Thêm hiệu ứng Tween nảy Panel trong `scripts/ui/HUD.gd` khi nhận tín hiệu `progress_updated`
-- [X] T013 [US1] Kết nối `Main.gd` để phát tín hiệu `score_updated` và `progress_updated` và quản lý hiển thị HUD
 
-**Điểm kiểm tra**: HUD hiển thị chính xác tiến trình màn chơi với hiệu ứng mượt mà.
+- [X] T009 [P] [US1] Di chuyển HUD scene hiện tại vào bên trong TopPanel trong scenes/main/Main.tscn
+- [X] T010 [P] [US1] Cập nhật HUD.gd: Đảm bảo labels (Moves, Target, Progress) được căn giữa ngang trong scripts/ui/HUD.gd
+- [X] T011 [US1] Cập nhật HUD.gd: Kết nối với GameEvents signals (score_updated, progress_updated) trong scripts/ui/HUD.gd
+- [ ] T012 [US1] Test thủ công: Chạy game, di chuyển Player lên sát mép trên, kiểm tra Player không bị che bởi TopPanel
+- [ ] T013 [US1] Test thủ công: Resize cửa sổ game, kiểm tra TopPanel giữ chiều cao cố định, CenterGameArea co giãn
+
+**Điểm kiểm tra**: HUD hoạt động đầy đủ trong TopPanel, không có UI overlap
 
 ---
 
-## Giai đoạn 4: Câu chuyện Người dùng 2 - Xử lý khi bị kẹt khối (Ưu tiên: P1)
+## Giai đoạn 4: Câu chuyện Người dùng 2 - Trải nghiệm địa hình liền mạch (Ưu tiên: P1)
 
-**Mục tiêu**: Cung cấp nút Reset/Undo trên màn hình và hỗ trợ phím tắt (R/Ctrl+Z).
+**Mục tiêu**: Terrain autotiling với set_cells_terrain_connect() để texture tự động nối khớp
 
-**Kiểm thử Độc lập**: Nhấn nút hoặc phím tắt và thấy game quay lại trạng thái trước đó.
-
-### Kiểm thử cho Câu chuyện Người dùng 2
-- [X] T014 [P] [US2] Viết kiểm thử cho logic Undo (quay lại vị trí cũ, giảm move count) trong `tests/unit/test_undo_logic.gd`
+**Kiểm thử Độc lập**: Sinh màn chơi mới và kiểm tra texture tường/nền nối liền mạch không có đường rời rạc
 
 ### Triển khai cho Câu chuyện Người dùng 2
-- [X] T015 [P] [US2] Thêm nút Undo và Reset vào `scenes/ui/HUD.tscn` với icon tương ứng
-- [X] T016 [US2] Triển khai xử lý sự kiện nút bấm trong `scripts/ui/HUD.gd` để phát tín hiệu `undo_requested` và `reset_requested`
-- [X] T017 [US2] Cập nhật `scripts/logic/Player.gd` và `scenes/game_objects/Block.gd` để hỗ trợ thiết lập lại vị trí từ trạng thái lịch sử
-- [X] T018 [US2] Lắng nghe tín hiệu yêu cầu trong `scenes/main/Main.gd` và thực hiện logic Undo/Reset từ `GameState.gd`
-- [X] T019 [US2] Bắt sự kiện phím tắt (Input Map: `ui_undo`, `ui_reset`) trong một script UI trung tâm hoặc `Main.gd`
 
-**Điểm kiểm tra**: Người chơi có thể thoát khỏi tình trạng kẹt khối bằng Undo/Reset.
+- [X] T014 [P] [US2] Cập nhật _setup_level() trong Main.gd: Thay thế vòng lặp set_cell() cho background bằng set_cells_terrain_connect() trong scenes/main/Main.gd
+- [X] T015 [P] [US2] Cập nhật _setup_level() trong Main.gd: Sử dụng set_cells_terrain_connect() cho targets layer (nếu targets cũng dùng terrain) trong scenes/main/Main.gd
+- [X] T016 [US2] Xác minh TileSet configuration: Kiểm tra terrain_set và terrain đã được cấu hình đúng trong Editor
+- [ ] T017 [US2] Test thủ công: Sinh màn chơi mới 3 lần, kiểm tra tất cả texture tường nối khớp (không có missing borders)
+- [ ] T018 [US2] Debug nếu cần: Nếu terrain không nối đúng, kiểm tra terrain_peering_bits trong TileSet
+
+**Điểm kiểm tra**: Terrain autotiling hoạt động, bản đồ có visual polish chuyên nghiệp
 
 ---
 
-## Giai đoạn 5: Câu chuyện Người dùng 3 - Hoàn thành màn chơi (Ưu tiên: P1)
+## Giai đoạn 5: Câu chuyện Người dùng 3 - Victory Screen bền vững (Ưu tiên: P1)
 
-**Mục tiêu**: Hiển thị Victory Pop-up khi thắng, cho phép chơi lại hoặc sang màn tiếp theo.
+**Mục tiêu**: Victory Popup hiển thị ổn định ở TẤT CẢ các màn chơi, không chỉ màn đầu tiên
 
-**Kiểm thử Độc lập**: Đẩy khối cuối cùng vào đích và thấy Pop-up hiện ra.
+**Kiểm thử Độc lập**: Thắng màn 1 → Next Level → Thắng màn 2 → Victory Popup PHẢI hiện lần 2
 
 ### Triển khai cho Câu chuyện Người dùng 3
-- [X] T020 [P] [US3] Thiết kế `scenes/ui/VictoryPopup.tscn` với thông báo chúc mừng và 2 nút "Next Level", "Replay"
-- [X] T021 [US3] Triển khai logic hiển thị/ẩn và xử lý nút bấm trong `scripts/ui/VictoryPopup.gd`
-- [X] T022 [US3] Kết nối tín hiệu `win_condition_met` từ `Main.gd` để kích hoạt `VictoryPopup`
-- [X] T023 [US3] Liên kết nút "Next Level" để gọi hàm sinh màn mới trong `Main.gd` thông qua tín hiệu `next_level_requested`
 
-**Điểm kiểm tra**: Vòng lặp game hoàn tất với màn hình thông báo chiến thắng.
+- [X] T019 [P] [US3] Audit Main.gd _ready(): Đảm bảo GameEvents.win_condition_met.connect(_on_win) chỉ gọi 1 lần trong scenes/main/Main.gd
+- [X] T020 [P] [US3] Audit Main.gd: Tìm và XÓA bỏ tất cả disconnect() calls cho win_condition_met signal (nếu có) trong scenes/main/Main.gd
+- [X] T021 [US3] Cập nhật _generate_and_setup(): Thêm victory_layer.hide() ở đầu hàm để reset UI state trong scenes/main/Main.gd
+- [X] T022 [US3] Cập nhật _on_win(): Đảm bảo victory_layer.show() và %VictoryPopup.show() được gọi trong scenes/main/Main.gd
+- [ ] T023 [US3] Test thủ công: Chơi và thắng 3 màn liên tiếp, đếm số lần Victory Popup hiện (phải là 3/3)
+- [ ] T024 [US3] Debug với breakpoint: Nếu Victory không hiện, đặt breakpoint trong _on_win() và kiểm tra signal có được emit không
 
----
-
-## Giai đoạn 6: Câu chuyện Người dùng 4 - Chú giải Khối (Ưu tiên: P2)
-
-**Mục tiêu**: Hiển thị bảng Chú giải (Legend) ở đáy màn hình, căn giữa ngang, mô tả các loại khối.
-
-**Kiểm thử Độc lập**: Thấy bảng chú giải hiện ra ở dưới Grid với đầy đủ thông tin icon và text.
-
-### Triển khai cho Câu chuyện Người dùng 4
-- [X] T024 [P] [US4] Tạo cảnh `scenes/ui/BlockLegend.tscn` sử dụng `HBoxContainer` để chứa các mục chú giải
-- [X] T025 [US4] Triển khai `scripts/ui/BlockLegend.gd` để sinh tự động các mục chú giải từ danh sách Resource khối có sẵn
-- [X] T026 [US4] Tích hợp `BlockLegend.tscn` vào `VBoxContainer` ở đáy màn hình trong `Main.tscn`
+**Điểm kiểm tra**: Victory Screen hoạt động ổn định xuyên suốt game loop
 
 ---
 
-## Giai đoạn 7: Trau chuốt & Các vấn đề xuyên suốt
+## Giai đoạn 6: Trau chuốt & Block Legend
 
-**Mục đích**: Tối ưu hóa Responsive và làm sạch mã nguồn.
+**Mục đích**: Hoàn thiện BlockLegend component ở BottomPanel
 
-- [X] T027 [P] Kiểm tra tính Responsive của UI trên các độ phân giải khác nhau (800x600, 1920x1080)
-- [ ] T028 [P] Thêm âm thanh hiệu ứng (SFX) nhẹ khi nhấn nút hoặc khi HUD "nảy" (nếu có tài nguyên)
-- [X] T029 Dọn dẹp các đoạn mã `print()` debug và tối ưu hóa việc kết nối tín hiệu
+- [X] T025 [P] Di chuyển hoặc tạo BlockLegend scene vào bên trong BottomPanel trong scenes/main/Main.tscn
+- [X] T026 [P] Cập nhật BlockLegend.gd: Duyệt qua BlockData resources và hiển thị icons + descriptions trong scripts/ui/BlockLegend.gd
+- [X] T027 [P] Styling: Thêm padding/margin cho TopPanel và BottomPanel để UI không sát mép
+- [ ] T028 Test toàn diện: Chạy quickstart.md validation scenarios (Layout, Terrain, Victory Loop)
+- [X] T029 [P] Cập nhật documentation: Ghi lại cấu trúc VBoxContainer layout trong README.md hoặc CLAUDE.md nếu cần
 
 ---
 
@@ -125,23 +115,64 @@
 
 ### Phụ thuộc Giai đoạn
 
-- **Thiết lập (Giai đoạn 1)** & **Nền tảng (Giai đoạn 2)**: Cần hoàn thành trước để có hạ tầng Signal và GameState.
-- **US1 (HUD)**: Là ưu tiên cao nhất (P1) vì nó cung cấp phản hồi cơ bản nhất.
-- **US2, US3**: Có thể thực hiện song song sau khi có HUD cơ bản.
-- **US4 (Legend)**: Ưu tiên thấp hơn (P2), thực hiện cuối cùng.
+- **Thiết lập (Giai đoạn 1)**: BỎ QUA - Dự án đã tồn tại
+- **Nền tảng (Giai đoạn 2)**: Không có phụ thuộc - NGĂN CHẶN tất cả câu chuyện người dùng (T001-T008 PHẢI hoàn thành trước)
+- **User Story 1 (Giai đoạn 3)**: Phụ thuộc vào T001-T008 (VBoxContainer layout)
+- **User Story 2 (Giai đoạn 4)**: Phụ thuộc vào T001-T008, có thể song song với US1
+- **User Story 3 (Giai đoạn 5)**: Phụ thuộc vào T001-T008, có thể song song với US1 và US2
+- **Trau chuốt (Giai đoạn 6)**: Phụ thuộc vào T001-T024 (tất cả User Stories)
+
+### Biểu đồ Phụ thuộc
+
+```
+T001-T008 (Nền tảng - VBoxContainer)
+    ├─→ T009-T013 (US1: HUD)
+    ├─→ T014-T018 (US2: Terrain) [có thể song song với US1]
+    └─→ T019-T024 (US3: Victory) [có thể song song với US1, US2]
+         └─→ T025-T029 (Polish)
+```
+
+### Cơ hội Song song
+
+- **Sau T008**: T009-T013 (US1), T014-T018 (US2), T019-T024 (US3) có thể chạy song song nếu có đủ nhân lực
+- **Trong mỗi Story**: Các tasks có đánh dấu [P] có thể chạy song song với nhau
 
 ---
 
 ## Chiến lược Triển khai
 
-### MVP Trước (Chỉ Câu chuyện Người dùng 1)
+### MVP Trước (3 User Stories đều P1)
 
-1. Hoàn thành Giai đoạn 1 & 2 (Cơ sở hạ tầng & Signals).
-2. Triển khai HUD (US1) để người chơi thấy được số bước và tiến trình.
-3. **Xác thực**: Kiểm tra số liệu hiển thị trên HUD có khớp với logic game không.
+Vì cả 3 user stories đều có ưu tiên P1 và đều quan trọng như nhau, MVP nên bao gồm:
+
+1. **Hoàn thành Giai đoạn 2: Nền tảng** (T001-T008) - BLOCKING
+2. **Hoàn thành US1: HUD Layout** (T009-T013) - Đảm bảo UI không overlap
+3. **Hoàn thành US2: Terrain** (T014-T018) - Visual polish
+4. **Hoàn thành US3: Victory Loop** (T019-T024) - Game loop integrity
+5. **DỪNG và XÁC THỰC**: Chạy toàn bộ quickstart.md scenarios
+6. **Giai đoạn 6: BlockLegend Polish** (T025-T029) - Nice-to-have
 
 ### Bàn giao Tăng dần
 
-1. Thêm chức năng Undo/Reset (US2) để cải thiện trải nghiệm người dùng.
-2. Thêm màn hình Victory (US3) để hoàn thiện vòng lặp chơi game.
-3. Cuối cùng thêm Chú giải (US4) để hỗ trợ người chơi mới.
+1. **Checkpoint 1**: Hoàn thành T001-T008 → VBoxContainer layout đã sẵn sàng
+2. **Checkpoint 2**: Hoàn thành T009-T013 → HUD không overlap, test riêng US1
+3. **Checkpoint 3**: Hoàn thành T014-T018 → Terrain autotiling, test riêng US2
+4. **Checkpoint 4**: Hoàn thành T019-T024 → Victory loop stable, test riêng US3
+5. **Final**: Hoàn thành T025-T029 → BlockLegend + polish
+
+---
+
+## Tổng kết
+
+- **Tổng số tasks**: 29 tasks
+- **Tasks per story**:
+  - Nền tảng (Giai đoạn 2): 8 tasks (T001-T008) - BLOCKING
+  - US1 (HUD): 5 tasks (T009-T013)
+  - US2 (Terrain): 5 tasks (T014-T018)
+  - US3 (Victory): 6 tasks (T019-T024)
+  - Polish: 5 tasks (T025-T029)
+- **Parallel opportunities**: 
+  - 12 tasks có đánh dấu [P] có thể song song
+  - 3 User Stories (US1, US2, US3) có thể triển khai song song sau khi Nền tảng hoàn thành
+- **MVP scope**: Giai đoạn 2 + US1 + US2 + US3 (T001-T024) = 24 tasks
+- **Format validation**: ✅ Tất cả tasks tuân theo format `- [ ] [TID] [P?] [Story?] Description with file path`

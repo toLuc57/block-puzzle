@@ -1,31 +1,23 @@
-# Giao diện Tín hiệu (GameEvents Signals)
+# Hợp đồng Giao diện: Tín hiệu UI & Game Loop
 
-Tất cả các thành phần UI và Logic sẽ giao tiếp thông qua Singleton `GameEvents.gd`.
+## Tín hiệu Autoload (GameEvents.gd)
 
-## Tín hiệu từ Logic đến UI
+Hợp đồng này quy định cách thức UI và Logic Game giao tiếp với nhau.
 
-### `score_updated(current_moves: int, target_moves: int)`
-- Phát ra khi số bước di chuyển thay đổi.
-- **HUD** lắng nghe để cập nhật hiển thị.
+| Tín hiệu | Tham số | Mô tả |
+|----------|---------|-------|
+| `score_updated` | `current: int, target: int` | Phát ra khi số bước thay đổi. HUD cập nhật nhãn tương ứng. |
+| `progress_updated` | `placed: int, total: int` | Phát ra khi một khối di chuyển vào/ra khỏi ô đích. HUD thực hiện hiệu ứng Tween. |
+| `win_condition_met` | (không có) | Phát ra khi tất cả các khối ở đúng vị trí. VictoryPopup hiển thị. |
+| `undo_requested` | (không có) | UI yêu cầu quay lại bước trước. |
+| `reset_requested` | (không có) | UI yêu cầu chơi lại màn hiện tại. |
+| `next_level_requested`| (không có) | UI yêu cầu sinh màn chơi mới sau khi thắng. |
 
-### `progress_updated(placed: int, total: int)`
-- Phát ra khi một khối được đẩy vào hoặc ra khỏi ô đích.
-- **HUD** lắng nghe để cập nhật thanh tiến trình và thực hiện hiệu ứng Tween.
+## Ràng buộc Hiển thị (UI Contracts)
 
-### `victory_triggered(stats: Dictionary)`
-- Phát ra khi điều kiện thắng được thỏa mãn.
-- **VictoryPopup** lắng nghe để hiển thị.
-
-## Tín hiệu từ UI đến Logic
-
-### `undo_requested()`
-- Phát ra khi người chơi nhấn nút Undo hoặc phím `Ctrl+Z`.
-- **Main/GameState** lắng nghe để quay lại trạng thái trước đó.
-
-### `reset_requested()`
-- Phát ra khi người chơi nhấn nút Reset hoặc phím `R`.
-- **Main** lắng nghe để làm mới màn chơi hiện tại.
-
-### `next_level_requested()`
-- Phát ra khi người chơi nhấn "Next Level" trên màn hình chiến thắng.
-- **Main** lắng nghe để sinh màn mới.
+- **VBoxContainer Root**: Phải chứa 3 children theo thứ tự: TopPanel, CenterGameArea, BottomPanel.
+- **TopPanel**: `size_flags_vertical = SIZE_SHRINK_BEGIN`, chiều cao cố định, chứa HUD.
+- **CenterGameArea**: `size_flags_vertical = SIZE_EXPAND_FILL`, tự động chiếm không gian còn lại, chứa GridContainer và TargetLayer.
+- **BottomPanel**: `size_flags_vertical = SIZE_SHRINK_END`, chiều cao cố định, chứa BlockLegend.
+- **VictoryPopup**: Phải nằm trong một `CanvasLayer` riêng với `layer = 10` để hiển thị trên tất cả. Phải tự động `hide()` khi nhận tín hiệu `next_level_requested` hoặc `reset_requested`.
+- **Signal Connection**: `GameEvents.win_condition_met.connect(_on_win)` chỉ được gọi 1 lần duy nhất tại `_ready()` của Main.gd, không bao giờ disconnect.

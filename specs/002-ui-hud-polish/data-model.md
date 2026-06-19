@@ -1,30 +1,28 @@
-# Mô hình Dữ liệu: Hệ thống UI và Trạng thái Game
+# Mô hình Dữ liệu: Hệ thống UI và Đánh bóng giao diện
 
 ## Thực thể
 
-### 1. GameHistoryState (Cấu trúc dữ liệu nội bộ)
-Dùng để lưu trữ trạng thái tại một thời điểm để phục vụ tính năng Undo.
+### 1. HUDState
+Đại diện cho trạng thái hiện tại hiển thị trên HUD.
+- `current_moves`: int (Số bước người chơi đã thực hiện)
+- `target_moves`: int (Số bước tối ưu để thắng)
+- `placed_blocks`: int (Số khối đã nằm trên ô đích)
+- `total_blocks`: int (Tổng số khối trong màn chơi)
 
-- `player_pos`: `Vector2i` - Vị trí hiện tại của người chơi.
-- `block_positions`: `Dictionary[Block, Vector2i]` - Bản đồ vị trí của tất cả các khối.
-- `move_count`: `int` - Số bước đã đi tại thời điểm đó.
+### 2. BlockConcept
+Đại diện cho một mục trong bảng Chú giải (Legend).
+- `block_name`: String
+- `icon_texture`: Texture2D
+- `description`: String (Lấy từ `BlockData.tres`)
 
-### 2. BlockData (Resource mở rộng)
-Cập nhật tệp `scripts/logic/BlockData.gd` để hỗ trợ hiển thị Chú giải.
+### 3. LayoutContainer
+Định nghĩa cấu trúc layout 3 phần của màn hình.
+- `top_panel_height`: int (Chiều cao cố định cho HUD, ví dụ: 60px)
+- `bottom_panel_height`: int (Chiều cao cố định cho Legend, ví dụ: 40px)
+- `center_area_flags`: int (SIZE_EXPAND_FILL để chiếm không gian còn lại)
 
-- `id`: `String` - Định danh duy nhất.
-- `color`: `Color` - Màu sắc hiển thị.
-- `is_sliding`: `bool` - Khối có trượt hay không.
-- `description`: `String` - **(MỚI)** Mô tả ngắn về cách khối hoạt động để hiển thị trong Legend.
+## Mối quan hệ
 
-## Trạng thái UI
-
-### HUDState
-- `current_moves`: `int`
-- `target_moves`: `int`
-- `blocks_placed`: `int`
-- `total_blocks`: `int`
-
-### VictoryState
-- `is_visible`: `bool`
-- `final_score`: `int`
+- `Main.gd` quản lý `GameState`, phát tín hiệu cập nhật cho `HUDState`.
+- `BlockLegend.gd` duyệt qua danh sách các `BlockData` để sinh ra các `BlockConcept` trên UI.
+- `VBoxContainer` tổ chức TopPanel, CenterGameArea, BottomPanel theo chiều dọc để ngăn chặn overlay.

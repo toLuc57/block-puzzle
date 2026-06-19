@@ -6,7 +6,14 @@
 
 **Trạng thái**: Nháp (Đã cập nhật lỗi Layout & Terrain)
 
-**Đầu vào**: Mô tả của người dùng: "Hãy cập nhật và bổ sung tài liệu đặc tả (Spec) trong thư mục "specs/002-ui-hud-polish" để sửa đổi các lỗi nghiêm trọng hiện tại và tích hợp tính năng Terrain: 1. Sửa lỗi Layout đè (UI Overlay Bug): - Mặc dù đã chia 3 phần, Top HUD và Bottom Tutorial vẫn đang đè lên không gian 10x10 của Game Screen. - Yêu cầu: Đóng gói vùng chơi 10x10 vào một SubViewportContainer hoặc thiết lập dứt khoát kích thước cố định cho GridContainer. Khi hoán đổi map hoặc khởi tạo, các vật thể (Player, Blocks) CHỈ ĐƯỢC PHÉP hiển thị và di chuyển hoàn toàn bên trong diện tích an toàn của khu vực trung tâm này, tuyệt đối không được lấn lên phía trên hoặc phía dưới. 2. Tích hợp Hệ thống Địa hình (TileMap Terrain): - Trong TileMapLayer của "scenes/main/Main.tscn", tôi đã cấu hình sẵn 'terrain_set' và 'terrain' (đã paint xong trên Editor). - Yêu cầu: Cập nhật mã nguồn thiết lập level để khi sinh map tự động, hệ thống phải áp dụng tính năng tự động nối tường/đường của Godot bằng cách sử dụng hàm `set_cells_terrain_connect()` của TileMapLayer thay vì vẽ từng ô riêng lẻ. 3. Sửa lỗi màn hình Chiến thắng (Victory Screen Loop Bug): - Lỗi hiện tại: Màn hình Victory chỉ xuất hiện ở màn chơi đầu tiên. Khi người chơi nhấn "Next Level", thuật toán sinh map mới thành công nhưng khi thắng các ải về sau, màn hình Victory không hiển thị nữa. - Yêu cầu: Kiểm tra lại việc ngắt/kết nối lại tín hiệu (Signals) giữa GameEvents và UI khi reset/đổi màn chơi. Đảm bảo hàm `_on_win` luôn được kích hoạt ở TẤT CẢ các ải."
+**Đầu vào**: Mô tả của người dùng: "Chia màn hình làm 3 phần tách biệt rõ ràng thông qua VBoxContainer:
+   - Phần đầu (Top): Chứa HUD (Moves, Target, nút Undo, Reset) nằm gọn trong một Panel có chiều cao cố định, không đè lên vùng chơi.
+   - Phần giữa (Center): Chứa vùng chơi game (GridContainer, TargetLayer, Player, Blocks). Thiết lập Size Flags dọc thành 'Expand' và 'Fill' để vùng chơi tự động co giãn chiếm trọn không gian ở giữa mà không bị lấn chiếm.
+   - Phần cuối (Bottom): Chứa thanh chú thích thuộc tính các loại đá (Đá xám, Đá băng) nằm cố định ở đáy.
+
+Các yêu cầu bổ sung:
+1. Tích hợp Hệ thống Địa hình (TileMap Terrain): Trong TileMapLayer của 'scenes/main/Main.tscn', đã cấu hình sẵn 'terrain_set' và 'terrain'. Cập nhật mã nguồn thiết lập level để khi sinh map tự động, hệ thống phải áp dụng tính năng tự động nối tường/đường của Godot bằng cách sử dụng hàm `set_cells_terrain_connect()` của TileMapLayer thay vì vẽ từng ô riêng lẻ.
+2. Sửa lỗi màn hình Chiến thắng (Victory Screen Loop Bug): Màn hình Victory chỉ xuất hiện ở màn chơi đầu tiên. Khi người chơi nhấn 'Next Level', thuật toán sinh map mới thành công nhưng khi thắng các ải về sau, màn hình Victory không hiển thị nữa. Kiểm tra lại việc ngắt/kết nối lại tín hiệu (Signals) giữa GameEvents và UI khi reset/đổi màn chơi. Đảm bảo hàm `_on_win` luôn được kích hoạt ở TẤT CẢ các ải."
 
 ## Clarifications
 

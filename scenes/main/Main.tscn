@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cddxum84e58nu"]
+[gd_scene format=4 uid="uid://cddxum84e58nu"]
 
 [ext_resource type="Script" uid="uid://dbrata01fiwh1" path="res://scenes/main/Main.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://6qrqmh3jb2jk" path="res://art/Grass.png" id="2_nha0i"]
@@ -241,8 +241,18 @@ texture = ExtResource("2_nha0i")
 10:2/0/terrains_peering_bit/left_side = 0
 10:2/0/terrains_peering_bit/top_side = 0
 0:3/0 = 0
+0:3/0/terrain_set = 0
+0:3/0/terrain = 0
+0:3/0/terrains_peering_bit/right_side = 0
 1:3/0 = 0
+1:3/0/terrain_set = 0
+1:3/0/terrain = 0
+1:3/0/terrains_peering_bit/right_side = 0
+1:3/0/terrains_peering_bit/left_side = 0
 2:3/0 = 0
+2:3/0/terrain_set = 0
+2:3/0/terrain = 0
+2:3/0/terrains_peering_bit/left_side = 0
 3:3/0 = 0
 3:3/0/terrain_set = 0
 3:3/0/terrain = 0
@@ -353,6 +363,7 @@ texture = ExtResource("2_nha0i")
 6:6/0 = 0
 7:6/0 = 0
 8:6/0 = 0
+5:6/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ko0rf"]
 texture = ExtResource("5_sjxhf")
@@ -410,6 +421,7 @@ scale = Vector2(2.5, 2.5)
 
 [node name="TargetLayer" type="TileMapLayer" parent="VBoxContainer/GamePanel/GameArea/SubViewport/World" unique_id=1232579675]
 unique_name_in_owner = true
+tile_map_data = PackedByteArray("AADy/wUAAAAGAAAAAADy/wYAAAAEAAEAAADy/wcAAAADAAEAAADy/wgAAAADAAIAAADx/wkAAAADAAAAAADx/woAAAAHAAIAAADx/wsAAAACAAIAAADw/wsAAAAAAAIAAADv/wkAAAADAAIAAADw/woAAAAAAAAAAADv/wgAAAADAAEAAADv/wcAAAADAAEAAADv/wYAAAADAAAAAADv/wQAAAADAAMAAAD0/wcAAAAEAAMAAADz/wYAAAACAAIAAADx/wUAAAAIAAMAAADw/wUAAAAEAAMAAAD2/wgAAAAEAAMAAAD1/wcAAAAHAAMAAAD6/woAAAAEAAMAAAD5/wkAAAAHAAMAAAD4/wkAAAAEAAMAAAD3/wgAAAAHAAMAAAD9/wsAAAAHAAMAAAD8/wsAAAAEAAMAAAD7/woAAAAHAAMAAAD3/wYAAAADAAMAAAD7/wgAAAADAAEAAAD7/wYAAAADAAEAAAD7/wcAAAADAAEAAAD7/wQAAAACAAEAAAD7/wUAAAAHAAEAAAD7/wMAAAACAAAAAAD7/wkAAAADAAEAAAD6/wUAAAAAAAIAAAD6/wQAAAAAAAEAAAD6/wMAAAAAAAAAAAD5/wIAAAAHAAMAAAD4/wIAAAAIAAMAAAD3/wIAAAAEAAMAAAD2/wMAAAAHAAMAAAD1/wMAAAAEAAMAAAD0/wQAAAADAAMAAADz/wUAAAACAAAAAAAFAA0AAAAAAAMAAAAGAA0AAAACAAMAAAAHAA0AAAADAAIAAAA=")
 tile_set = SubResource("TileSet_gyg6b")
 
 [node name="GridContainer" type="Node2D" parent="VBoxContainer/GamePanel/GameArea/SubViewport/World" unique_id=631598469]
