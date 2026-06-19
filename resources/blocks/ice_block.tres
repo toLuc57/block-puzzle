@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="BlockData" load_steps=2 format=3 uid="uid://ice_block_res"]
+[gd_resource type="Resource" script_class="BlockData" format=3 uid="uid://4ekr0fdm8vy"]
 
-[ext_resource type="Script" path="res://scripts/logic/BlockData.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://bglik6rcnaqru" path="res://scripts/logic/BlockData.gd" id="1_script"]
 
 [resource]
 script = ExtResource("1_script")
 id = "ice-block"
 color = Color(0, 0.7, 1, 1)
 is_sliding = true
+description = "Đá băng: Trơn trượt, trượt đến khi chạm tường."

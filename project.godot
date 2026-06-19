@@ -18,11 +18,12 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameEvents="*res://scripts/autoload/GameEvents.gd"
+GameState="*res://scripts/logic/GameState.gd"
 
 [display]
 
-window/size/viewport_width=600
-window/size/viewport_height=800
+window/size/viewport_width=800
+window/size/viewport_height=600
 window/stretch/mode="canvas_items"
 
 [input]
