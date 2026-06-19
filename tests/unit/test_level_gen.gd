@@ -4,25 +4,36 @@ var grid_logic: GridLogic
 var level_gen: LevelGenerator
 
 func before_each():
-	grid_logic = GridLogic.new(10, 10)
+	grid_logic = GridLogic.new(12, 10)
 	level_gen = LevelGenerator.new()
 	level_gen.grid_logic = grid_logic
 
-func test_pull_move_gray_block():
-	var win_pos = Vector2i(5, 5)
-	var pull_dir = Vector2i(1, 0) # Pulling from right to left
-	var block_new_pos = win_pos + pull_dir
-	var player_new_pos = block_new_pos + pull_dir
-	
-	# Initial state: block on target
-	grid_logic.blocks[win_pos] = "BlockNode"
-	grid_logic.player_pos = win_pos + pull_dir # Player must be adjacent to pull
-	
-	# Simulation of pull move logic
-	if grid_logic.is_within_bounds(block_new_pos) and grid_logic.is_within_bounds(player_new_pos):
-		if not grid_logic.is_occupied(block_new_pos) and grid_logic.get_cell(block_new_pos) != GridLogic.CellType.WALL:
-			grid_logic.move_block(win_pos, block_new_pos)
-			grid_logic.player_pos = player_new_pos
-			
-	assert_eq(grid_logic.blocks.has(block_new_pos), true, "Block should be pulled")
-	assert_eq(grid_logic.player_pos, player_new_pos, "Player should move back")
+func test_generate_level_returns_12x10_payload():
+	var state = level_gen.generate_level(3, 8)
+	assert_eq(state.grid_size, Vector2i(12, 10), "Generated level should expose a 12x10 display grid")
+	assert_true(state.playable_mask.has("floor_cells"), "Payload should include playable floor cells")
+	assert_true(state.playable_mask.has("boundary_cells"), "Payload should include boundary cells")
+	assert_true(state.playable_mask.is_connected, "Playable mask should stay connected")
+
+func test_generated_targets_blocks_and_player_stay_in_valid_cells():
+	var state = level_gen.generate_level(3, 8)
+	var floor_cells = state.playable_mask.floor_cells
+
+	for target_pos in state.targets:
+		assert_true(target_pos in floor_cells, "Targets should stay on playable floor cells")
+
+	for block_data in state.blocks:
+		assert_true(block_data.pos in floor_cells, "Blocks should stay on playable floor cells")
+
+	assert_false(state.player_pos in state.obstacles, "Player should not spawn inside obstacles")
+
+func test_generated_layout_respects_playable_limits():
+	var state = level_gen.generate_level(3, 8)
+
+	for floor_pos in state.playable_mask.floor_cells:
+		assert_true(floor_pos.x >= 2 and floor_pos.x <= 9, "Playable floor should stay inside the centered playable envelope")
+		assert_true(floor_pos.y >= 2 and floor_pos.y <= 7, "Playable floor should stay inside the centered playable envelope")
+
+	for boundary_pos in state.playable_mask.boundary_cells:
+		assert_true(boundary_pos.x >= 1 and boundary_pos.x <= 10, "Boundary should stay inside the 10x8 puzzle area")
+		assert_true(boundary_pos.y >= 1 and boundary_pos.y <= 8, "Boundary should stay inside the 10x8 puzzle area")

@@ -13,3 +13,9 @@ export_presets.cfg
 # System files
 .DS_Store
 Thumbs.db
+*.tmp
+*.swp
+.vscode/
+.idea/
+*.log
+.env*
