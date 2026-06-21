@@ -18,7 +18,7 @@
   quá trình lặp lại.
 -->
 
-**Ngôn ngữ/Phiên bản**: [ví dụ: Godot 4.6 (GDScript)]
+**Ngôn ngữ/Phiên bản**: Godot 4.6 (GDScript)
 
 **Các Phụ thuộc Chính**: [ví dụ: Godot Engine]
 
@@ -26,7 +26,7 @@
 
 **Kiểm thử**: [ví dụ: GUT, Các kịch bản xác thực thủ công]
 
-**Nền tảng Mục tiêu**: [ví dụ: Máy tính để bàn (Windows/macOS/Linux), Web (HTML5), Di động (Android/iOS)]
+**Nền tảng Mục tiêu**: Máy tính để bàn (Windows/macOS/Linux) là ưu tiên; di động chỉ khi đặc tả yêu cầu.
 
 **Loại Dự án**: [ví dụ: Trò chơi Godot / Công cụ]
 
@@ -40,7 +40,11 @@
 
 *CỔNG: Phải vượt qua trước nghiên cứu Giai đoạn 0. Kiểm tra lại sau thiết kế Giai đoạn 1.*
 
-[Các cổng được xác định dựa trên tệp hiến chương]
+- Xác nhận tài liệu và thuật ngữ dùng tiếng Việt, ngoại lệ cho thuật ngữ chuyên môn chuẩn.
+- Xác nhận dự án dùng Godot 4.6 và GDScript.
+- Xác nhận desktop là nền tảng ưu tiên.
+- Xác nhận mọi thay đổi có thể xác định rõ file được thêm/sửa/xoá và mục đích của từng thay đổi.
+- Xác nhận phần tĩnh dùng TileMap/TileMapLayer, actor di chuyển là node riêng.
 
 ## Cấu trúc Dự án
 

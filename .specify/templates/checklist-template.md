@@ -22,15 +22,15 @@
 
 ## [Danh mục 1]
 
-- [ ] CHK001 Mục danh sách kiểm tra đầu tiên với hành động rõ ràng
+- [ ] CHK001 Xác nhận thay đổi có file được thêm/sửa/xoá rõ ràng và đúng mục đích
 - [ ] CHK002 Mục danh sách kiểm tra thứ hai
 - [ ] CHK003 Mục danh sách kiểm tra thứ ba
 
 ## [Danh mục 2]
 
 - [ ] CHK004 Một mục danh mục khác
-- [ ] CHK005 Mục với tiêu chí cụ thể
-- [ ] CHK006 Mục cuối cùng trong danh mục này
+- [ ] CHK005 Xác nhận comment chỉ xuất hiện ở nơi dễ gây hiểu nhầm nếu không có chú thích
+- [ ] CHK006 Xác nhận tên file, biến, hằng số, và hàm phản ánh đúng vai trò của chúng
 
 ## Ghi chú
 

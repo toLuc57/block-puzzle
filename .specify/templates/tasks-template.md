@@ -9,7 +9,7 @@ description: "Bản mẫu danh sách nhiệm vụ để triển khai tính năng
 
 **Điều kiện tiên quyết**: plan.md (bắt buộc), spec.md (bắt buộc cho các câu chuyện người dùng), research.md, data-model.md, contracts/
 
-**Kiểm thử**: Các ví dụ bên dưới bao gồm các nhiệm vụ kiểm thử. Kiểm thử là TÙY CHỌN - chỉ bao gồm chúng nếu được yêu cầu rõ ràng trong đặc tả tính năng.
+**Kiểm thử**: Các ví dụ bên dưới bao gồm các nhiệm vụ kiểm thử. Kiểm thử là bắt buộc cho thay đổi cốt lõi, đặc biệt là luật chơi, dữ liệu, và luồng tương tác.
 
 **Tổ chức**: Các nhiệm vụ được nhóm theo câu chuyện người dùng để cho phép triển khai và kiểm thử độc lập cho mỗi câu chuyện.
 
@@ -51,7 +51,7 @@ description: "Bản mẫu danh sách nhiệm vụ để triển khai tính năng
 
 - [ ] T001 Tạo cấu trúc thư mục (scenes, scripts, resources, tests)
 - [ ] T002 Cấu hình các thiết lập dự án Godot
-- [ ] T003 Thiết lập GUT (Godot Unit Testing) nếu được yêu cầu
+- [ ] T003 Thiết lập GUT (Godot Unit Testing) hoặc cơ chế kiểm thử phù hợp nếu được yêu cầu
 
 ---
 

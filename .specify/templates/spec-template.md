@@ -25,7 +25,7 @@
 
 ### Câu chuyện Người dùng 1 - [Tiêu đề ngắn] (Ưu tiên: P1)
 
-[Mô tả hành trình người dùng này bằng ngôn ngữ thông thường]
+[Mô tả hành trình người dùng này bằng tiếng Việt, dùng thuật ngữ chuyên môn giữ nguyên khi cần]
 
 **Lý do ưu tiên**: [Giải thích giá trị và tại sao nó có mức độ ưu tiên này]
 
@@ -40,7 +40,7 @@
 
 ### Câu chuyện Người dùng 2 - [Tiêu đề ngắn] (Ưu tiên: P2)
 
-[Mô tả hành trình người dùng này bằng ngôn ngữ thông thường]
+[Mô tả hành trình người dùng này bằng tiếng Việt, dùng thuật ngữ chuyên môn giữ nguyên khi cần]
 
 **Lý do ưu tiên**: [Giải thích giá trị và tại sao nó có mức độ ưu tiên này]
 
@@ -54,7 +54,7 @@
 
 ### Câu chuyện Người dùng 3 - [Tiêu đề ngắn] (Ưu tiên: P3)
 
-[Mô tả hành trình người dùng này bằng ngôn ngữ thông thường]
+[Mô tả hành trình người dùng này bằng tiếng Việt, dùng thuật ngữ chuyên môn giữ nguyên khi cần]
 
 **Lý do ưu tiên**: [Giải thích giá trị và tại sao nó có mức độ ưu tiên này]
 
@@ -125,7 +125,7 @@
   khi mô tả tính năng không chỉ rõ một số chi tiết nhất định.
 -->
 
-- [Giả định về người dùng mục tiêu, ví dụ: "Người dùng có kết nối internet ổn định"]
-- [Giả định về ranh giới phạm vi, ví dụ: "Hỗ trợ di động nằm ngoài phạm vi cho phiên bản v1"]
+- [Giả định về người dùng mục tiêu, ví dụ: "Người dùng làm việc trên desktop"]
+- [Giả định về ranh giới phạm vi, ví dụ: "Desktop là nền tảng ưu tiên; di động chỉ khi đặc tả yêu cầu"]
 - [Giả định về dữ liệu/môi trường, ví dụ: "Hệ thống xác thực hiện tại sẽ được tái sử dụng"]
 - [Phụ thuộc vào hệ thống/dịch vụ hiện có, ví dụ: "Yêu cầu quyền truy cập vào API hồ sơ người dùng hiện tại"]
