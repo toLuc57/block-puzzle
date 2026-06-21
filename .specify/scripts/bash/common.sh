@@ -27,16 +27,25 @@ find_specify_root() {
 # Get repository root, prioritizing .specify directory
 # This prevents using a parent repository when spec-kit is initialized in a subdirectory
 get_repo_root() {
-    # First, look for .specify directory (spec-kit's own marker)
+    # Prefer the repository root relative to this script so resolution does not
+    # depend on the caller's current working directory.
+    local script_dir="$(CDPATH="" cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    local script_root
+    script_root="$(cd "$script_dir/../../.." && pwd)"
+    if [ -d "$script_root/.specify" ]; then
+        echo "$script_root"
+        return
+    fi
+
+    # Fall back to searching upward from the current working directory.
     local specify_root
     if specify_root=$(find_specify_root); then
         echo "$specify_root"
         return
     fi
 
-    # Final fallback to script location
-    local script_dir="$(CDPATH="" cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    (cd "$script_dir/../../.." && pwd)
+    # Final fallback to the script-derived root.
+    echo "$script_root"
 }
 
 # Get current feature name from explicit state only.
