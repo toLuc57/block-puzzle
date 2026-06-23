@@ -60,6 +60,16 @@
 - Để `Main.gd` tự suy luận layer nền từ targets/blocks → bị loại vì logic render sẽ trở nên ngầm định và khó test.
 - Lưu layout nền ngoài payload rồi đọc từ file khác → bị loại vì thêm phụ thuộc không cần thiết cho feature này.
 
+## Quyết định 7: `Water` trong vùng 14x12 phải chặn player và block
+
+**Decision**: Dù `Water` phủ toàn khung game để tạo nền trực quan, mọi ô `Water` nằm bên trong vùng 14x12 vẫn được xem là ô chặn trong gameplay và phải đi qua semantics `GridLogic`.
+
+**Rationale**: Clarification mới của spec yêu cầu player chỉ đi trên `Grass` và `Path`; vì vậy `Water` bên trong vùng chơi không thể chỉ là nền trang trí. Đưa semantics này vào research giúp generator, grid logic, test và quickstart nói cùng một ngôn ngữ.
+
+**Alternatives considered**:
+- Xem `Water` chỉ là nền không chặn → bị loại vì mâu thuẫn trực tiếp với clarification.
+- Tạo layer/loại ô riêng cho water-chặn → bị loại vì tăng rườm rà mà không cần thiết; cùng một `Water` layer đã đủ để thể hiện nền và semantics chặn qua GridLogic.
+
 ## Tác động tới các file hiện có
 
 - `scenes/main/Main.gd`: cập nhật reset grid, render Water/Grass/Path/Crops, và spawn actor theo payload mới.

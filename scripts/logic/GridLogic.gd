@@ -1,16 +1,16 @@
 extends RefCounted
 class_name GridLogic
 
-enum CellType { FLOOR, BOUNDARY, OBSTACLE, OUTER_WALL }
+enum CellType { FLOOR, WATER, BOUNDARY, OBSTACLE, OUTER_WALL }
 
-var width: int = 12
-var height: int = 10
+var width: int = 16
+var height: int = 14
 var grid: Array = []
 var blocks: Dictionary = {} # Vector2i -> Block Node
 var player_pos: Vector2i = Vector2i.ZERO
 var targets: Array = []
 
-func _init(w: int = 12, h: int = 10):
+func _init(w: int = 16, h: int = 14):
 	width = w
 	height = h
 	targets = []
@@ -46,14 +46,14 @@ func is_target(pos: Vector2i) -> bool:
 func can_player_enter(pos: Vector2i) -> bool:
 	if not is_within_bounds(pos):
 		return false
-	if get_cell(pos) in [CellType.OBSTACLE, CellType.OUTER_WALL]:
+	if get_cell(pos) in [CellType.WATER, CellType.OBSTACLE, CellType.OUTER_WALL]:
 		return false
 	return not is_occupied(pos)
 
 func can_block_enter(pos: Vector2i) -> bool:
 	if not is_within_bounds(pos):
 		return false
-	if get_cell(pos) in [CellType.BOUNDARY, CellType.OBSTACLE, CellType.OUTER_WALL]:
+	if get_cell(pos) in [CellType.WATER, CellType.BOUNDARY, CellType.OBSTACLE, CellType.OUTER_WALL]:
 		return false
 	return not is_occupied(pos)
 

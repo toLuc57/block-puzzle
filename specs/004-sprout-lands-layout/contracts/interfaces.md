@@ -30,7 +30,7 @@
 | Khái niệm ô | Player | Block | Ghi chú |
 |-------------|--------|-------|--------|
 | Ngoài khung game | Bị chặn | Bị chặn | Giới hạn cứng của màn |
-| `Water` | Không tự mang gameplay | Không tự mang gameplay | Chỉ là lớp nền toàn khung |
+| `Water` | Bị chặn | Bị chặn | Lớp nền toàn khung; ô Water trong vùng 14x12 là chướng ngại vật |
 | `Grass` | Ô nền hợp lệ | Ô nền hợp lệ | Vùng puzzle chính |
 | `PathBoundary` | Theo luật hiện hành cần giữ nhất quán | Bị chặn | Cần khớp feature trước và test lại trong implement |
 | `CropsObstacle` | Bị chặn | Bị chặn | Chướng ngại vật tĩnh |

@@ -4,36 +4,44 @@ var grid_logic: GridLogic
 var level_gen: LevelGenerator
 
 func before_each():
-	grid_logic = GridLogic.new(12, 10)
+	grid_logic = GridLogic.new(16, 14)
 	level_gen = LevelGenerator.new()
 	level_gen.grid_logic = grid_logic
 
-func test_generate_level_returns_12x10_payload():
+func test_generate_level_returns_16x14_payload_with_full_water_and_grass_area():
 	var state = level_gen.generate_level(3, 8)
-	assert_eq(state.grid_size, Vector2i(12, 10), "Generated level should expose a 12x10 display grid")
-	assert_true(state.playable_mask.has("floor_cells"), "Payload should include playable floor cells")
-	assert_true(state.playable_mask.has("boundary_cells"), "Payload should include boundary cells")
-	assert_true(state.playable_mask.is_connected, "Playable mask should stay connected")
+	assert_eq(state.grid_size, Vector2i(16, 14), "Generated level should expose a 16x14 display grid")
+	assert_eq(state.water_cells.size(), 16 * 14, "Water should cover the full display frame")
+	assert_eq(state.grass_cells.size(), 14 * 12, "Grass should cover the 14x12 playable area")
+	assert_true(state.grass_variant_map.size() == state.grass_cells.size(), "Grass variant metadata should exist for every grass cell")
 
 func test_generated_targets_blocks_and_player_stay_in_valid_cells():
 	var state = level_gen.generate_level(3, 8)
-	var floor_cells = state.playable_mask.floor_cells
+	var usable_cells = state.grass_cells.filter(func(pos): return not pos in state.path_boundary_cells and not pos in state.crops_cells)
 
 	for target_pos in state.targets:
-		assert_true(target_pos in floor_cells, "Targets should stay on playable floor cells")
+		assert_true(target_pos in usable_cells, "Targets should stay on usable grass cells")
 
 	for block_data in state.blocks:
-		assert_true(block_data.pos in floor_cells, "Blocks should stay on playable floor cells")
+		assert_true(block_data.pos in usable_cells, "Blocks should stay on usable grass cells")
 
-	assert_false(state.player_pos in state.obstacles, "Player should not spawn inside obstacles")
+	assert_true(state.player_pos in usable_cells, "Player should spawn on a usable grass cell")
 
-func test_generated_layout_respects_playable_limits():
+func test_generated_layout_respects_14x12_playable_limits():
 	var state = level_gen.generate_level(3, 8)
 
-	for floor_pos in state.playable_mask.floor_cells:
-		assert_true(floor_pos.x >= 2 and floor_pos.x <= 9, "Playable floor should stay inside the centered playable envelope")
-		assert_true(floor_pos.y >= 2 and floor_pos.y <= 7, "Playable floor should stay inside the centered playable envelope")
+	for grass_pos in state.grass_cells:
+		assert_true(grass_pos.x >= 1 and grass_pos.x <= 14, "Grass should stay inside the 14x12 playable area")
+		assert_true(grass_pos.y >= 1 and grass_pos.y <= 12, "Grass should stay inside the 14x12 playable area")
 
-	for boundary_pos in state.playable_mask.boundary_cells:
-		assert_true(boundary_pos.x >= 1 and boundary_pos.x <= 10, "Boundary should stay inside the 10x8 puzzle area")
-		assert_true(boundary_pos.y >= 1 and boundary_pos.y <= 8, "Boundary should stay inside the 10x8 puzzle area")
+	for boundary_pos in state.path_boundary_cells:
+		assert_true(boundary_pos in state.grass_cells, "Path boundary should stay inside the grass area")
+
+func test_generated_path_boundary_is_orthogonal_only():
+	var state = level_gen.generate_level(3, 8)
+	for boundary_pos in state.path_boundary_cells:
+		var orthogonal_neighbors = 0
+		for dir in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+			if boundary_pos + dir in state.path_boundary_cells:
+				orthogonal_neighbors += 1
+		assert_true(orthogonal_neighbors >= 1, "Each boundary cell should connect orthogonally to the path shape")

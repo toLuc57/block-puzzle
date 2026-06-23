@@ -30,6 +30,7 @@ godot --headless -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit/
 2. **Mong đợi**:
    - `Water` phủ toàn khung game.
    - `Grass` tạo thành vùng chơi 14x12.
+   - Ô Water nằm trong vùng 14x12 vẫn là chướng ngại vật đối với player và block.
    - Người chơi nhìn vào có thể phân biệt ngay khung tổng thể và vùng chơi chính.
 
 ## Kịch bản 2: Kiểm tra ranh giới `Path`

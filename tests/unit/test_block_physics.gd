@@ -3,7 +3,7 @@ extends "res://addons/gut/test.gd"
 var grid_logic: GridLogic
 
 func before_each():
-	grid_logic = GridLogic.new(12, 10)
+	grid_logic = GridLogic.new(16, 14)
 
 func test_gray_block_moves_one_floor_cell():
 	var block_pos = Vector2i(5, 5)
@@ -16,12 +16,15 @@ func test_gray_block_moves_one_floor_cell():
 	assert_eq(grid_logic.blocks.has(target_pos), true, "Gray block should move one floor cell")
 	assert_eq(grid_logic.blocks.has(block_pos), false, "Gray block should leave old cell")
 
-func test_gray_block_blocked_by_boundary():
+func test_gray_block_blocked_by_water_and_boundary():
 	var block_pos = Vector2i(5, 5)
-	var boundary_pos = Vector2i(6, 5)
+	var water_pos = Vector2i(6, 5)
+	var boundary_pos = Vector2i(7, 5)
 	grid_logic.blocks[block_pos] = "GrayBlockNode"
+	grid_logic.set_cell(water_pos, GridLogic.CellType.WATER)
 	grid_logic.set_cell(boundary_pos, GridLogic.CellType.BOUNDARY)
 
+	assert_false(grid_logic.can_block_enter(water_pos), "Gray block should be blocked by water")
 	assert_false(grid_logic.can_block_enter(boundary_pos), "Gray block should be blocked by puzzle boundary")
 
 func test_ice_block_stops_at_obstacle():

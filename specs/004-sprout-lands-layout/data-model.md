@@ -11,6 +11,7 @@
 
 **Ràng buộc**:
 - `water_cells` phải bao phủ toàn bộ khung hiển thị.
+- Mọi ô `Water` nằm trong vùng 14x12 phải chặn player và block.
 - Mọi ô render và mọi actor đều phải nằm trong `DisplayFrame`.
 
 ## 2. PlayableGrassArea

@@ -14,11 +14,14 @@
 - Q: Grass 14x12 nghĩa là gì? → A: Khu vực chơi của player được cập nhật thành 14x12 ô; Water phủ toàn khung game và Grass là lớp nền random trên 14x12 ô để tránh đơn điệu.
 - Q: Ranh giới path được phép uốn như thế nào? → A: Ranh giới được phép gãy khúc theo các đoạn ngang/dọc như ví dụ hợp lệ đã nêu, nhưng tuyệt đối không được nối bằng đường chéo hoặc góc xiên.
 
+### Session 2026-06-22
+- Q: “Mép Grass” nên được hiểu như thế nào? → A: “Mép Grass” chỉ là tile viền trực quan cho các ô Grass nằm ở rìa vùng 14x12.
+
 ## Kịch bản Người dùng & Kiểm thử *(bắt buộc)*
 
 ### Câu chuyện Người dùng 1 - Xem giao diện Sprout Lands (Ưu tiên: P1)
 
-Người chơi mở màn chơi và nhìn thấy một bố cục mới lấy cảm hứng từ Sprout Lands, với nền glass, lớp Water phủ toàn khung game, lớp Grass phủ 14x12 ô, ranh giới path và chướng ngại vật crops được sắp xếp rõ ràng.
+Người chơi mở màn chơi và nhìn thấy một bố cục mới lấy cảm hứng từ Sprout Lands, với nền glass, lớp Water phủ toàn khung game, lớp Grass phủ 14x12 ô, mép Grass được thể hiện bằng tile viền trực quan ở rìa vùng chơi, ranh giới path và chướng ngại vật crops được sắp xếp rõ ràng.
 
 **Lý do ưu tiên**: Đây là thay đổi nhìn thấy trực tiếp đầu tiên, quyết định ấn tượng và khả năng nhận biết khu vực chơi.
 
@@ -26,8 +29,9 @@ Người chơi mở màn chơi và nhìn thấy một bố cục mới lấy c�
 
 **Kịch bản Chấp nhận**:
 
-1. **Cho** người chơi mở màn chơi, **Khi** giao diện được tải, **Thì** bố cục Sprout Lands hiển thị đúng nền glass, lớp Water, lớp Grass, path và crops theo thiết kế mới.
+1. **Cho** người chơi mở màn chơi, **Khi** giao diện được tải, **Thì** bố cục Sprout Lands hiển thị đúng nền glass, lớp Water, lớp Grass có mép Grass trực quan ở rìa vùng chơi, path và crops theo thiết kế mới.
 2. **Cho** người chơi quan sát toàn bộ khu vực, **Khi** giao diện được hiển thị, **Thì** khu vực chơi của player là 14x12 ô và không có vùng nào vượt quá giới hạn bố cục đã quy định.
+3. **Cho** player di chuyển trong màn chơi, **Khi** player đi tới ô Grass hoặc ô Path, **Thì** player được phép đi vào các ô đó; **và** **Khi** player đi tới ô Water nằm trong vùng 14x12, **Thì** ô đó được xem là chướng ngại vật và player không được đi vào.
 
 ---
 
@@ -80,6 +84,9 @@ Bố cục khu vực chơi có thể có hình dạng linh hoạt, miễn là v�
 - **FR-007**: Đường ranh giới không được hiển thị theo đường chéo; chỉ được dùng các đoạn ngang và dọc, kể cả khi ranh giới gãy khúc.
 - **FR-008**: Bố cục phải giúp người chơi phân biệt được vùng hợp lệ, ranh giới chặn và chướng ngại vật một cách rõ ràng.
 - **FR-009**: Water phải phủ toàn khung game và Grass phải xuất hiện như lớp nền 14x12 ô với vị trí ô biến đổi để giảm cảm giác đơn điệu.
+- **FR-010**: Player chỉ được di chuyển trên các ô Grass và Path hợp lệ trong vùng chơi.
+- **FR-011**: Mọi ô Water xuất hiện bên trong vùng 14x12 phải được xem là chướng ngại vật đối với player.
+- **FR-012**: Các ô Grass nằm ở rìa vùng chơi 14x12 phải hiển thị mép Grass bằng tile viền trực quan mà không làm thay đổi semantics va chạm.
 
 ### Các Thực thể Chính *(bao gồm nếu tính năng liên quan đến dữ liệu)*
 

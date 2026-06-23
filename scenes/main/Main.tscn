@@ -473,6 +473,26 @@ render_target_update_mode = 4
 unique_name_in_owner = true
 scale = Vector2(2.5, 2.5)
 
+[node name="Water" type="TileMapLayer" parent="VBoxContainer/GamePanel/GameArea/SubViewport/World"]
+unique_name_in_owner = true
+position = Vector2(0.8, 0)
+tile_set = SubResource("TileSet_gyg6b")
+
+[node name="Grass" type="TileMapLayer" parent="VBoxContainer/GamePanel/GameArea/SubViewport/World"]
+unique_name_in_owner = true
+position = Vector2(0.8, 0)
+tile_set = SubResource("TileSet_gyg6b")
+
+[node name="Path" type="TileMapLayer" parent="VBoxContainer/GamePanel/GameArea/SubViewport/World"]
+unique_name_in_owner = true
+position = Vector2(0.8, 0)
+tile_set = SubResource("TileSet_gyg6b")
+
+[node name="Crops" type="TileMapLayer" parent="VBoxContainer/GamePanel/GameArea/SubViewport/World"]
+unique_name_in_owner = true
+position = Vector2(0.8, 0)
+tile_set = SubResource("TileSet_gyg6b")
+
 [node name="TargetLayer" type="TileMapLayer" parent="VBoxContainer/GamePanel/GameArea/SubViewport/World" unique_id=1232579675]
 unique_name_in_owner = true
 position = Vector2(0.8, 0)

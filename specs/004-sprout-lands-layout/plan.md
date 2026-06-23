@@ -6,7 +6,7 @@
 
 ## Tóm tắt
 
-Tính năng này cập nhật bố cục giao diện chơi sang phong cách Sprout Lands bằng cách dùng `sprout_lands_tile_map.tscn` làm nguồn tham chiếu trực quan, phủ `Water` trên toàn khung game, dựng `Grass` ngẫu nhiên trong lưới chơi 14x12, dùng `Path` làm ranh giới chặn đá theo các đoạn ngang/dọc, và dùng `Crops` làm chướng ngại vật. Cách tiếp cận kỹ thuật là giữ static geometry ở TileMapLayer, tiếp tục để actor di chuyển là node riêng do `Main.gd` spawn, và mở rộng pipeline sinh màn/lưới hiện có để trả về đầy đủ dữ liệu nền, ranh giới, vật cản và vị trí spawn phù hợp với bố cục mới.
+Tính năng này cập nhật bố cục giao diện chơi sang phong cách Sprout Lands bằng cách dùng `sprout_lands_tile_map.tscn` làm nguồn tham chiếu trực quan, phủ `Water` trên toàn khung game, dựng `Grass` ngẫu nhiên trong lưới chơi 14x12, dùng `Path` làm ranh giới chặn đá theo các đoạn ngang/dọc, và dùng `Crops` làm chướng ngại vật. Trong semantics gameplay, các ô `Water` nằm trong vùng 14x12 vẫn là ô chặn đối với player và block. Cách tiếp cận kỹ thuật là giữ static geometry ở TileMapLayer, tiếp tục để actor di chuyển là node riêng do `Main.gd` spawn, và mở rộng pipeline sinh màn/lưới hiện có để trả về đầy đủ dữ liệu nền, ranh giới, vật cản và vị trí spawn phù hợp với bố cục mới.
 
 ## Ngữ cảnh Kỹ thuật
 
@@ -26,7 +26,7 @@ Tính năng này cập nhật bố cục giao diện chơi sang phong cách Spro
 
 **Ràng buộc**:
 - Khu vực chơi của player dùng lưới 14x12 ô
-- `Water` phủ toàn khung game
+- `Water` phủ toàn khung game, và mọi ô `Water` nằm trong vùng 14x12 phải được xem là chướng ngại vật trong gameplay
 - `Grass` là lớp nền 14x12 với phân bố ô biến đổi để giảm đơn điệu
 - Ranh giới `Path` chỉ được tạo bởi các đoạn ngang/dọc; không có đường chéo hoặc góc xiên
 - `Crops` là chướng ngại vật dễ phân biệt với ranh giới

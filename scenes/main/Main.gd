@@ -1,15 +1,23 @@
 extends Control
 
-const FLOOR_TERRAIN_SET := 0
-const FLOOR_TERRAIN := 0
-const BOUNDARY_SOURCE := 2
-const BOUNDARY_ATLAS := Vector2i(6, 1)
-const OBSTACLE_SOURCE := 2
-const OBSTACLE_ATLAS := Vector2i(8, 1)
+const WATER_SOURCE := 7
+const GRASS_SOURCE := 0
+const PATH_TERRAIN_SET := 1
+const PATH_TERRAIN := 1
+const CROPS_SOURCE := 4
+const CROPS_VARIANTS := [
+	Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0),
+	Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1), Vector2i(4, 1)
+]
 const TARGET_SOURCE := 1
 const TARGET_ATLAS := Vector2i(0, 0)
 
+@onready var camera = %Camera2D
 @onready var grid_container = %GridContainer
+@onready var water_layer = %Water
+@onready var grass_layer = %Grass
+@onready var path_layer = %Path
+@onready var crops_layer = %Crops
 @onready var target_layer = %TargetLayer
 @onready var victory_layer = %VictoryLayer
 
@@ -22,7 +30,7 @@ var gray_block_res = preload("res://resources/blocks/gray_block.tres")
 var ice_block_res = preload("res://resources/blocks/ice_block.tres")
 
 func _ready():
-	grid_logic = GridLogic.new(12, 10)
+	grid_logic = GridLogic.new(16, 14)
 	level_gen = LevelGenerator.new()
 	level_gen.grid_logic = grid_logic
 
@@ -56,13 +64,19 @@ func _setup_level(state: Dictionary):
 	level_gen.grid_logic = grid_logic
 	grid_logic.targets = state.targets.duplicate()
 
-	target_layer.clear()
-	_render_static_tiles(state)
-
-	for boundary_pos in state.playable_mask.boundary_cells:
+	for water_pos in state.water_cells:
+		grid_logic.set_cell(water_pos, GridLogic.CellType.WATER)
+	for grass_pos in state.grass_cells:
+		grid_logic.set_cell(grass_pos, GridLogic.CellType.FLOOR)
+	for boundary_pos in state.path_boundary_cells:
 		grid_logic.set_cell(boundary_pos, GridLogic.CellType.BOUNDARY)
-	for obstacle_pos in state.obstacles:
+	for obstacle_pos in state.crops_cells:
 		grid_logic.set_cell(obstacle_pos, GridLogic.CellType.OBSTACLE)
+
+	_clear_static_layers()
+	_render_static_tiles(state)
+	_center_camera(state.grid_size)
+
 	for target_pos in state.targets:
 		target_layer.set_cell(target_pos, TARGET_SOURCE, TARGET_ATLAS)
 
@@ -84,17 +98,30 @@ func _setup_level(state: Dictionary):
 
 	GameState.record_initial_state(player, grid_logic)
 
-func _render_static_tiles(state: Dictionary):
-	var floor_cells = []
-	for x in range(state.grid_size.x):
-		for y in range(state.grid_size.y):
-			floor_cells.append(Vector2i(x, y))
-	target_layer.set_cells_terrain_connect(floor_cells, FLOOR_TERRAIN_SET, FLOOR_TERRAIN)
+func _clear_static_layers():
+	target_layer.clear()
+	water_layer.clear()
+	grass_layer.clear()
+	path_layer.clear()
+	crops_layer.clear()
 
-	for boundary_pos in state.playable_mask.boundary_cells:
-		target_layer.set_cell(boundary_pos, BOUNDARY_SOURCE, BOUNDARY_ATLAS)
-	for obstacle_pos in state.obstacles:
-		target_layer.set_cell(obstacle_pos, OBSTACLE_SOURCE, OBSTACLE_ATLAS)
+func _render_static_tiles(state: Dictionary):
+	for pos in state.water_cells:
+		var atlas = state.water_variant_map.get(pos, Vector2i.ZERO)
+		water_layer.set_cell(pos, WATER_SOURCE, atlas)
+
+	for pos in state.grass_cells:
+		var atlas = state.grass_variant_map.get(pos, Vector2i.ZERO)
+		grass_layer.set_cell(pos, GRASS_SOURCE, atlas)
+
+	path_layer.set_cells_terrain_connect(state.path_boundary_cells, PATH_TERRAIN_SET, PATH_TERRAIN)
+
+	for pos in state.crops_cells:
+		var atlas = CROPS_VARIANTS[abs(pos.x * 13 + pos.y * 7) % CROPS_VARIANTS.size()]
+		crops_layer.set_cell(pos, CROPS_SOURCE, atlas)
+
+func _center_camera(grid_size: Vector2i):
+	camera.position = Vector2(grid_size) * GameEvents.cell_size * 0.5
 
 func _on_block_moved(_block, _from, _to):
 	_update_progress()
