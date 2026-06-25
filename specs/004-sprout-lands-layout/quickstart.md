@@ -21,6 +21,8 @@ godot --path .
 
 ## Chạy bộ kiểm thử tự động
 
+Bộ kiểm thử tự động của feature này dùng GUT và yêu cầu script runner tồn tại tại `res://addons/gut/gut_cmdln.gd` trong repo.
+
 ```sh
 godot --headless -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit/
 ```

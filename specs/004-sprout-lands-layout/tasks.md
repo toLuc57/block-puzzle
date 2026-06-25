@@ -18,9 +18,9 @@
 
 **Mục đích**: Xác nhận các điểm nối triển khai và phạm vi test cho feature 004 trước khi sửa code.
 
-- [ ] T001 Rà soát và cập nhật điểm neo feature 004 trong `specs/004-sprout-lands-layout/plan.md`
-- [ ] T002 Rà soát baseline render/spawn hiện tại trong `scenes/main/Main.gd`
-- [ ] T003 Rà soát baseline sinh màn và semantics lưới trong `scripts/logic/LevelGenerator.gd` và `scripts/logic/GridLogic.gd`
+- [X] T001 Rà soát và cập nhật điểm neo feature 004 trong `specs/004-sprout-lands-layout/plan.md`
+- [X] T002 Rà soát baseline render/spawn hiện tại trong `scenes/main/Main.gd`
+- [X] T003 Rà soát baseline sinh màn và semantics lưới trong `scripts/logic/LevelGenerator.gd` và `scripts/logic/GridLogic.gd`
 
 ---
 
@@ -30,10 +30,10 @@
 
 **⚠️ QUAN TRỌNG**: Không bắt đầu user story nào trước khi hoàn thành giai đoạn này.
 
-- [ ] T004 Cập nhật cấu trúc `GeneratedLevelState` trong `scripts/logic/LevelGenerator.gd` để trả về `grid_size`, `water_cells`, `grass_cells`, `grass_variant_map`, `path_boundary_cells`, `crops_cells`, `targets`, `blocks`, `player_pos`, và `target_moves`
-- [ ] T005 Cập nhật semantics geometry tĩnh trong `scripts/logic/GridLogic.gd` để phân biệt `PathBoundary` và `CropsObstacle`
-- [ ] T006 [P] Mở rộng fixture/assertion payload trong `tests/unit/test_level_gen.gd` cho contract layout mới
-- [ ] T007 [P] Cập nhật tài liệu xác thực triển khai trong `specs/004-sprout-lands-layout/quickstart.md` nếu hành vi lúc implement buộc phải tinh chỉnh bước kiểm tra
+- [X] T004 Cập nhật cấu trúc `GeneratedLevelState` trong `scripts/logic/LevelGenerator.gd` để trả về `grid_size`, `water_cells`, `grass_cells`, `grass_variant_map`, `path_boundary_cells`, `crops_cells`, `targets`, `blocks`, `player_pos`, và `target_moves`
+- [X] T005 Cập nhật semantics geometry tĩnh trong `scripts/logic/GridLogic.gd` để phân biệt `PathBoundary` và `CropsObstacle`
+- [X] T006 [P] Mở rộng fixture/assertion payload trong `tests/unit/test_level_gen.gd` cho contract layout mới
+- [X] T007 [P] Cập nhật tài liệu xác thực triển khai trong `specs/004-sprout-lands-layout/quickstart.md` nếu hành vi lúc implement buộc phải tinh chỉnh bước kiểm tra
 
 **Điểm kiểm tra**: Generator và grid semantics đã có contract đủ để render geometry tĩnh và spawn actor theo layout mới.
 
@@ -47,15 +47,15 @@
 
 ### Kiểm thử cho Câu chuyện Người dùng 1
 
-- [ ] T008 [P] [US1] Cập nhật kiểm thử payload nền và kích thước vùng chơi trong `tests/unit/test_level_gen.gd`
-- [ ] T009 [P] [US1] Cập nhật kiểm thử reset/spawn theo `grid_size` mới trong `tests/unit/test_player_movement.gd`
+- [X] T008 [P] [US1] Cập nhật kiểm thử payload nền và kích thước vùng chơi trong `tests/unit/test_level_gen.gd`
+- [X] T009 [P] [US1] Cập nhật kiểm thử reset/spawn theo `grid_size` mới trong `tests/unit/test_player_movement.gd`
 
 ### Triển khai cho Câu chuyện Người dùng 1
 
-- [ ] T010 [US1] Cập nhật khởi tạo lưới và pipeline dựng màn trong `scenes/main/Main.gd` để dùng `grid_size` 14x12 từ payload và bốn layer cố định `Water` → `Grass` → `Path` → `Crops` trong `scenes/main/Main.tscn`
-- [ ] T011 [US1] Triển khai render `Water` và `Grass` theo payload trong `scenes/main/Main.gd`, đảm bảo Water trong vùng 14x12 vẫn được gán là ô chặn trong logic lưới
-- [ ] T012 [US1] Thêm chọn biến thể trực quan cho `Grass` mà không đổi collision trong `scripts/logic/LevelGenerator.gd`
-- [ ] T013 [US1] Đồng bộ TileMapLayer và scene tham chiếu trong `scenes/main/Main.tscn` và `scenes/tile_maps/sprout_lands_tile_map.tscn` để giữ đúng thứ tự 4 layer `Water` → `Grass` → `Path` → `Crops` và tile source phục vụ `Water`/`Grass`
+- [X] T010 [US1] Cập nhật khởi tạo lưới và pipeline dựng màn trong `scenes/main/Main.gd` để dùng `grid_size` 14x12 từ payload và bốn layer cố định `Water` → `Grass` → `Path` → `Crops` trong `scenes/main/Main.tscn`
+- [X] T011 [US1] Triển khai render `Water` và `Grass` theo payload trong `scenes/main/Main.gd`, đảm bảo Water trong vùng 14x12 vẫn được gán là ô chặn trong logic lưới
+- [X] T012 [US1] Thêm chọn biến thể trực quan cho `Grass` mà không đổi collision trong `scripts/logic/LevelGenerator.gd`
+- [X] T013 [US1] Đồng bộ TileMapLayer và scene tham chiếu trong `scenes/main/Main.tscn` và `scenes/tile_maps/sprout_lands_tile_map.tscn` để giữ đúng thứ tự 4 layer `Water` → `Grass` → `Path` → `Crops` và tile source phục vụ `Water`/`Grass`
 
 **Điểm kiểm tra**: Người chơi có thể mở game và thấy bố cục Sprout Lands nền mới đúng khung tổng thể và vùng chơi 14x12.
 
@@ -69,40 +69,38 @@
 
 ### Kiểm thử cho Câu chuyện Người dùng 2
 
-- [ ] T014 [P] [US2] Cập nhật kiểm thử boundary trực giao trong `tests/unit/test_level_gen.gd`
-- [ ] T015 [P] [US2] Cập nhật kiểm thử va chạm player với `PathBoundary` và `CropsObstacle` trong `tests/unit/test_player_movement.gd`
-- [ ] T016 [P] [US2] Cập nhật kiểm thử block bị chặn bởi `PathBoundary` và `CropsObstacle` trong `tests/unit/test_block_physics.gd`
+- [X] T014 [P] [US2] Cập nhật kiểm thử boundary trực giao trong `tests/unit/test_level_gen.gd`
+- [X] T015 [P] [US2] Cập nhật kiểm thử va chạm player với `PathBoundary` và `CropsObstacle` trong `tests/unit/test_player_movement.gd`
+- [X] T016 [P] [US2] Cập nhật kiểm thử block bị chặn bởi `PathBoundary` và `CropsObstacle` trong `tests/unit/test_block_physics.gd`
 
 ### Triển khai cho Câu chuyện Người dùng 2
 
-- [ ] T017 [US2] Cập nhật generator boundary trực giao và placement của `Crops` trong `scripts/logic/LevelGenerator.gd`
-- [ ] T018 [US2] Cập nhật dựng `Path` và `Crops` theo layer riêng trong `scenes/main/Main.gd` và `scenes/main/Main.tscn`
-- [ ] T019 [US2] Hoàn thiện semantics ô chặn cho player và block trong `scripts/logic/GridLogic.gd`, bao gồm Water nằm trong vùng 14x12
-- [ ] T020 [US2] Điều chỉnh logic di chuyển người chơi theo semantics geometry mới trong `scenes/game_objects/Player.gd`
-- [ ] T021 [US2] Điều chỉnh logic tương tác/di chuyển block theo semantics geometry mới trong `scenes/game_objects/Block.gd`
+- [X] T017 [US2] Cập nhật generator boundary trực giao và placement của `Crops` trong `scripts/logic/LevelGenerator.gd`
+- [X] T018 [US2] Cập nhật dựng `Path` và `Crops` theo layer riêng trong `scenes/main/Main.gd` và `scenes/main/Main.tscn`
+- [X] T019 [US2] Hoàn thiện semantics ô chặn cho player và block trong `scripts/logic/GridLogic.gd`, bao gồm Water nằm trong vùng 14x12
+- [X] T020 [US2] Điều chỉnh logic di chuyển người chơi theo semantics geometry mới trong `scenes/game_objects/Player.gd`
+- [X] T021 [US2] Điều chỉnh logic tương tác/di chuyển block theo semantics geometry mới trong `scenes/game_objects/Block.gd`
 
 **Điểm kiểm tra**: Màn chơi hiển thị và vận hành với boundary chỉ theo ngang/dọc, không gây nhầm lẫn với crops.
 
 ---
 
-## Giai đoạn 5: Câu chuyện Người dùng 3 - Tối ưu hình dạng khu vực chơi (Ưu tiên: P2)
+## Giai đoạn 5: Câu chuyện Người dùng 3 - Kiểm tra layout 14x12 và checkpoint/reset (Ưu tiên: P2)
 
-**Mục tiêu**: Layout có thể linh hoạt, không bắt buộc hình chữ nhật hoàn chỉnh, nhưng vẫn tôn trọng giới hạn 14x12 và spawn hợp lệ.
+**Mục tiêu**: Layout cố định 14x12 phải sinh hợp lệ, spawn không chồng lấn, và reset/checkpoint phải quay về trạng thái đầu chính xác.
 
-**Kiểm thử Độc lập**: Sinh các màn có vùng khuyết hoặc cạnh gãy khúc, rồi xác nhận mọi actor/target vẫn nằm trong vùng hợp lệ và flow reset/sinh màn không hỏng.
+**Kiểm thử Độc lập**: Sinh nhiều màn ở layout 14x12, xác nhận actor/target luôn nằm trong vùng hợp lệ, và reset đưa game về checkpoint ban đầu.
 
 ### Kiểm thử cho Câu chuyện Người dùng 3
 
-- [ ] T022 [P] [US3] Cập nhật kiểm thử layout không chữ nhật nhưng hợp lệ trong `tests/unit/test_level_gen.gd`
-- [ ] T023 [P] [US3] Cập nhật kiểm thử spawn hợp lệ cho player, block, và target trong `tests/unit/test_level_gen.gd`
+- [X] T022 [P] [US3] Cập nhật kiểm thử layout hợp lệ trong giới hạn 14x12 trong `tests/unit/test_level_gen.gd`
+- [X] T023 [P] [US3] Cập nhật kiểm thử spawn hợp lệ cho player, block, và target trong `tests/unit/test_level_gen.gd`
 
 ### Triển khai cho Câu chuyện Người dùng 3
 
-- [ ] T024 [US3] Mở rộng sinh playable shape linh hoạt trong giới hạn 14x12 ở `scripts/logic/LevelGenerator.gd`
-- [ ] T025 [US3] Cập nhật quy trình dựng màn để dùng đúng playable mask hoặc tập ô hợp lệ trong `scenes/main/Main.gd`
-- [ ] T026 [US3] Cập nhật checkpoint/reset state cho payload layout mới trong `scripts/logic/GameState.gd` và `scenes/main/Main.gd`
+- [X] T026 [US3] Cập nhật checkpoint/reset state cho payload layout mới trong `scripts/logic/GameState.gd` và `scenes/main/Main.gd`
 
-**Điểm kiểm tra**: Có thể sinh layout không chữ nhật nhưng mọi spawn, reset, và semantics gameplay vẫn hợp lệ.
+**Điểm kiểm tra**: Layout 14x12 sinh ra hợp lệ, spawn không chồng lấn, và reset/checkpoint hoạt động nhất quán.
 
 ---
 
@@ -111,7 +109,7 @@
 **Mục đích**: Hoàn tất các kiểm tra cuối, đảm bảo tính đúng, dễ đọc, và không hồi quy.
 
 - [ ] T027 [P] Đối chiếu lại contract triển khai với `specs/004-sprout-lands-layout/contracts/interfaces.md`
-- [ ] T028 Chạy bộ kiểm thử logic trong `tests/unit/test_level_gen.gd`, `tests/unit/test_player_movement.gd`, và `tests/unit/test_block_physics.gd`
+- [X] T028 Chạy bộ kiểm thử logic trong `tests/unit/test_level_gen.gd`, `tests/unit/test_player_movement.gd`, và `tests/unit/test_block_physics.gd`
 - [ ] T029 Chạy xác thực thủ công theo `specs/004-sprout-lands-layout/quickstart.md`
 
 ---

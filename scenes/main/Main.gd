@@ -1,10 +1,12 @@
 extends Control
 
+const SPROUT_TILE_MAP_SCENE_PATH := "res://scenes/tile_maps/sprout_lands_tile_map.tscn"
 const WATER_SOURCE := 7
-const GRASS_SOURCE := 0
+const GRASS_TERRAIN_SET := 0
+const GRASS_TERRAIN := 0
 const PATH_TERRAIN_SET := 1
 const PATH_TERRAIN := 1
-const CROPS_SOURCE := 4
+const CROPS_SOURCE := 3
 const CROPS_VARIANTS := [
 	Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0),
 	Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1), Vector2i(4, 1)
@@ -30,6 +32,7 @@ var gray_block_res = preload("res://resources/blocks/gray_block.tres")
 var ice_block_res = preload("res://resources/blocks/ice_block.tres")
 
 func _ready():
+	_setup_static_layer_tilesets()
 	grid_logic = GridLogic.new(16, 14)
 	level_gen = LevelGenerator.new()
 	level_gen.grid_logic = grid_logic
@@ -40,6 +43,33 @@ func _ready():
 	GameEvents.win_condition_met.connect(_on_win)
 
 	_generate_and_setup()
+
+func _setup_static_layer_tilesets():
+	var template_scene = load(SPROUT_TILE_MAP_SCENE_PATH)
+	if template_scene == null:
+		push_error("Main: could not load %s" % SPROUT_TILE_MAP_SCENE_PATH)
+		return
+
+	var template = template_scene.instantiate()
+	if template == null:
+		push_error("Main: could not instantiate %s" % SPROUT_TILE_MAP_SCENE_PATH)
+		return
+
+	water_layer.tile_set = template.get_node("Water").tile_set
+	grass_layer.tile_set = template.get_node("Grass").tile_set
+	path_layer.tile_set = template.get_node("Path").tile_set
+	crops_layer.tile_set = template.get_node("Crops").tile_set
+	if template.has_node("TargetLayer"):
+		target_layer.tile_set = template.get_node("TargetLayer").tile_set
+
+	water_layer.z_index = 0
+	grass_layer.z_index = 1
+	path_layer.z_index = 2
+	crops_layer.z_index = 3
+	target_layer.z_index = 4
+	grid_container.z_index = 5
+
+	template.queue_free()
 
 func _input(event):
 	if event.is_action_pressed("ui_undo") or (event is InputEventKey and event.keycode == KEY_Z and event.ctrl_pressed):
@@ -110,9 +140,7 @@ func _render_static_tiles(state: Dictionary):
 		var atlas = state.water_variant_map.get(pos, Vector2i.ZERO)
 		water_layer.set_cell(pos, WATER_SOURCE, atlas)
 
-	for pos in state.grass_cells:
-		var atlas = state.grass_variant_map.get(pos, Vector2i.ZERO)
-		grass_layer.set_cell(pos, GRASS_SOURCE, atlas)
+	grass_layer.set_cells_terrain_connect(state.grass_cells, GRASS_TERRAIN_SET, GRASS_TERRAIN)
 
 	path_layer.set_cells_terrain_connect(state.path_boundary_cells, PATH_TERRAIN_SET, PATH_TERRAIN)
 
@@ -137,7 +165,8 @@ func _on_next_level_requested():
 	_generate_and_setup()
 
 func _on_reset_requested():
-	_generate_and_setup()
+	if not GameState.reset():
+		_generate_and_setup()
 
 func _on_win():
 	victory_layer.show()

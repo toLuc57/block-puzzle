@@ -17,6 +17,9 @@
 ### Session 2026-06-22
 - Q: “Mép Grass” nên được hiểu như thế nào? → A: “Mép Grass” chỉ là tile viền trực quan cho các ô Grass nằm ở rìa vùng 14x12.
 
+### Session 2026-06-24
+- Q: Hướng xác thực tự động cho feature này nên giữ theo bộ test nào? → A: Khôi phục GUT ở đúng đường dẫn `addons/gut/` và giữ nguyên hướng test hiện tại.
+
 ## Kịch bản Người dùng & Kiểm thử *(bắt buộc)*
 
 ### Câu chuyện Người dùng 1 - Xem giao diện Sprout Lands (Ưu tiên: P1)

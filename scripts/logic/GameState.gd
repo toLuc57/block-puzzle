@@ -71,5 +71,25 @@ func undo():
 	GameEvents.block_moved.emit(null, Vector2i.ZERO, Vector2i.ZERO)
 	is_undoing = false
 
-func reset():
-	pass
+func reset() -> bool:
+	if not player or not grid_logic or history.is_empty():
+		return false
+
+	var initial_state = history[0]
+	player.grid_pos = initial_state.player_pos
+	player.position = Vector2(initial_state.player_pos) * GameEvents.cell_size
+	grid_logic.player_pos = initial_state.player_pos
+	grid_logic.blocks.clear()
+
+	for block in initial_state.block_positions:
+		var pos = initial_state.block_positions[block]
+		grid_logic.blocks[pos] = block
+		block.grid_pos = pos
+		block.position = Vector2(pos) * GameEvents.cell_size
+
+	history = [initial_state]
+	current_moves = 0
+	is_undoing = false
+	GameEvents.score_updated.emit(current_moves, target_moves)
+	GameEvents.block_moved.emit(null, Vector2i.ZERO, Vector2i.ZERO)
+	return true

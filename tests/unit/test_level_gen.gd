@@ -45,3 +45,30 @@ func test_generated_path_boundary_is_orthogonal_only():
 			if boundary_pos + dir in state.path_boundary_cells:
 				orthogonal_neighbors += 1
 		assert_true(orthogonal_neighbors >= 1, "Each boundary cell should connect orthogonally to the path shape")
+
+func test_generated_layout_can_be_non_rectangular_but_still_valid():
+	var state = level_gen.generate_level(3, 8)
+	var interior_boundary_cells = state.path_boundary_cells.filter(func(pos):
+		return pos.x > 1 and pos.x < 14 and pos.y > 1 and pos.y < 12
+	)
+
+	assert_true(interior_boundary_cells.size() > 0, "Generated path boundary should be able to form inward dents")
+	assert_true(state.grass_cells.size() > state.path_boundary_cells.size(), "Playable grass should remain larger than the boundary shape")
+
+func test_generated_spawns_do_not_overlap_and_stay_in_usable_cells():
+	var state = level_gen.generate_level(3, 8)
+	var usable_cells = state.grass_cells.filter(func(pos): return not pos in state.path_boundary_cells and not pos in state.crops_cells)
+	var seen_positions = {}
+
+	assert_true(state.player_pos in usable_cells, "Player should spawn on a usable grass cell")
+	assert_false(state.player_pos in state.targets, "Player should not spawn on a target cell")
+
+	for target_pos in state.targets:
+		assert_true(target_pos in usable_cells, "Targets should spawn on usable grass cells")
+		assert_false(seen_positions.has(target_pos), "Targets should not overlap each other or the player")
+		seen_positions[target_pos] = true
+
+	for block_data in state.blocks:
+		assert_true(block_data.pos in usable_cells, "Blocks should spawn on usable grass cells")
+		assert_false(seen_positions.has(block_data.pos), "Blocks should not overlap targets or the player")
+		seen_positions[block_data.pos] = true
